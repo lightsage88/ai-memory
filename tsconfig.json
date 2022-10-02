@@ -1,0 +1,23 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+      "allowJs": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "isolatedModules": true,
+      "jsx": "react-jsx",
+      "lib": ["es6", "es2017.string", "dom"],
+      "moduleResolution": "node",
+      "noEmit": true,
+      "strict": true,
+      "target": "es6",
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "forceConsistentCasingInFileNames": false,
+      "noFallthroughCasesInSwitch": true,
+      "module": "esnext",
+      "resolveJsonModule": true
+    },
+    "include": ["src", "cypress", "public"]
+  }
+  
