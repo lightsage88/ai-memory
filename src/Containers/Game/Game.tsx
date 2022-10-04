@@ -1,3 +1,5 @@
+import Prompts from "../../Components/Prompts";
+
 export const Game = () => {
     return (
     <h1>
