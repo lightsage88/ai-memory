@@ -2,7 +2,9 @@
 
 export const Cardtable = () => {
     return (
-        <h1>Cardtable goes here</h1>
+        <div data-testid="card-table-div">
+            <h1>CardTable</h1>
+        </div>
     )
 }
 

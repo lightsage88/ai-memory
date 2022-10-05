@@ -1,9 +1,11 @@
 import { ReactElement, useState } from "react";
 import StyledComponents from "../../StyledComponents/StyledComponents";
 import { Button, TextField } from "@mui/material";
-import $ from 'jquery';
+import usePromptStore from "../../Store/promptStore";
 
 export const Prompts = () => {
+  const addPromptArray = usePromptStore((state) => state.addPromptArray);
+  const zustandPrompts = usePromptStore((state) => state.prompts);
   const [prompts, setPrompts] = useState<any[]>([]);
 
   /**
@@ -21,8 +23,8 @@ export const Prompts = () => {
 
   const resetPrompts = () => {
     setPrompts([]);
-    const inputs = document.getElementsByClassName('text-field-for-prompt');
-    $('.MuiInputBase-input').val('');
+    const inputs = document.getElementsByClassName("text-field-for-prompt");
+    $(".MuiInputBase-input").val("");
   };
 
   /**
@@ -54,6 +56,11 @@ export const Prompts = () => {
     }
     return true;
   };
+
+  const setComponentPromptsInState = () => {
+    addPromptArray(prompts);
+  };
+  console.log('zustandPrompts: ', zustandPrompts);
   return (
     <StyledComponents.StyledPromptsDialog open={true}>
       <h3>Enter 8 descriptions for the AI to make pictures from.</h3>
@@ -61,7 +68,10 @@ export const Prompts = () => {
         <strong>Example: </strong>Starfox helping Ukraine fight Putin
       </p>
       {textFields()}
-      <Button disabled={determineContinueButtonDisability()}>
+      <Button
+        disabled={determineContinueButtonDisability()}
+        onClick={() => setComponentPromptsInState()}
+      >
         Let's Rock!
       </Button>
       <Button onClick={() => resetPrompts()}>Clear</Button>
