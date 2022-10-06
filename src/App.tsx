@@ -10,6 +10,7 @@ export const App = () => {
   const displayLoader = useLoaderStore((state) => state.displayLoader);
   const loaderMessage = useLoaderStore((state) => state.loaderMessage);
   console.log('displayLoader', displayLoader);
+  console.log('process.env', process.env);
   return (
     <>
     {displayLoader && <Loader message={loaderMessage} />}
