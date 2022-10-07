@@ -16,13 +16,15 @@ const StyledCardTable = styled.div`
 export const Cardtable: FC<ICardtable> = (cardArtObjects) => {
   const cardDeck = useDeckStore((state) => state.cardDeck);
   const memoryCards = () => {
-    const deck = cardArtObjects.cardArtObjects.concat(
-      cardArtObjects.cardArtObjects
-    );
-    console.log("memoryCards running...", deck);
-    console.log('cardDeck bitch', cardDeck);
+    console.log("cardDeck bitch", cardDeck);
     return cardDeck.map((el, index) => {
-      return <Card artBase64String={el.artBase64} key={index} />;
+      return (
+        <Card
+          cardPromptText={el['prompt']}
+          artBase64String={el["artBase64"]}
+          key={index}
+        />
+      );
     });
   };
   memoryCards();
