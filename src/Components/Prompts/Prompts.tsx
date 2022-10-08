@@ -23,8 +23,12 @@ export const Prompts = () => {
 
   const resetPrompts = () => {
     setPrompts([]);
-    const inputs = document.getElementsByClassName("text-field-for-prompt");
-    $(".MuiInputBase-input").val("");
+    const inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+      let el = inputs[i];
+      el.value = '';
+    }
+    console.log("hokey pokey", inputs);
   };
 
   /**
@@ -37,6 +41,7 @@ export const Prompts = () => {
       const randomId = Math.ceil(Math.random() * 100000);
       jsxToReturn.push(
         <TextField
+          data-testid={`prompt-input-${i}`}
           className="text-field-for-prompt"
           key={i}
           variant="outlined"
@@ -60,10 +65,15 @@ export const Prompts = () => {
   const setComponentPromptsInState = () => {
     addPromptArray(prompts);
   };
-  console.log('zustandPrompts: ', zustandPrompts);
+  console.log("zustandPrompts: ", zustandPrompts);
   return (
-    <StyledComponents.StyledPromptsDialog open={true}>
-      <h3 data-testid="game-setup-directions">Enter 8 descriptions for the AI to make pictures from.</h3>
+    <StyledComponents.StyledPromptsDialog
+      open={true}
+      data-testid="prompts-container"
+    >
+      <h3 data-testid="game-setup-directions">
+        Enter 8 descriptions for the AI to make pictures from.
+      </h3>
       <p>
         <strong>Example: </strong>Starfox helping Ukraine fight Putin
       </p>
@@ -71,10 +81,13 @@ export const Prompts = () => {
       <Button
         disabled={determineContinueButtonDisability()}
         onClick={() => setComponentPromptsInState()}
+        data-testid="lets-rock-button"
       >
         Let's Rock!
       </Button>
-      <Button onClick={() => resetPrompts()}>Clear</Button>
+      <Button data-testid="clear-button" onClick={() => resetPrompts()}>
+        Clear
+      </Button>
     </StyledComponents.StyledPromptsDialog>
   );
 };
