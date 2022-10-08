@@ -9,21 +9,20 @@ import "./App.css";
 export const App = () => {
   const displayLoader = useLoaderStore((state) => state.displayLoader);
   const loaderMessage = useLoaderStore((state) => state.loaderMessage);
-  console.log('displayLoader', displayLoader);
-  console.log('process.env', process.env);
   return (
     <>
     {displayLoader && <Loader message={loaderMessage} />}
-      <Navigation />
       <Router>
         <Switch>
           <Route path="/game">
             <Game />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <Home />
           </Route>
         </Switch>
+        <Navigation />
+
       </Router>
     </>
   );

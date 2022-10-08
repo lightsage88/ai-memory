@@ -63,7 +63,7 @@ export const Prompts = () => {
   console.log('zustandPrompts: ', zustandPrompts);
   return (
     <StyledComponents.StyledPromptsDialog open={true}>
-      <h3>Enter 8 descriptions for the AI to make pictures from.</h3>
+      <h3 data-testid="game-setup-directions">Enter 8 descriptions for the AI to make pictures from.</h3>
       <p>
         <strong>Example: </strong>Starfox helping Ukraine fight Putin
       </p>
