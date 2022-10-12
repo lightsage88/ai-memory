@@ -18,11 +18,16 @@ export const Cardtable: FC<ICardtable> = (cardArtObjects) => {
   const memoryCards = () => {
     console.log("cardDeck bitch", cardDeck);
     return cardDeck.map((el, index) => {
+      console.log("wolbocho", index);
       return (
         <Card
-          cardPromptText={el['prompt']}
+          cardPromptText={el["prompt"]}
           artBase64String={el["artBase64"]}
           key={index}
+          dataCardIndex={el['dataId']}
+          shown={el['shown']}
+          solved={el['solved']}
+
         />
       );
     });

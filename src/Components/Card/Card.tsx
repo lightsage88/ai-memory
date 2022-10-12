@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import useDeckStore from "../../Store/deckStore";
 import { Card as MatCard } from "@mui/material";
 import { ICard } from "../../Interfaces/Card";
 import styled from "styled-components";
@@ -20,15 +21,20 @@ const StyledImageTag = styled.img`
     height: 256px;
 `
 
+
 export const Card: FC<ICard> = (cardData) => {
-  const [showImage, setShowImage] = useState<boolean>(false);
+  const showCardViaDataCardIndex = useDeckStore((state) => state.showCardViaDataCardIndex);
   console.log("card", cardData);
-  const { artBase64String, cardPromptText } = cardData;
+  const { artBase64String, cardPromptText, shown, solved } = cardData;
   const cardImage = `data:image/jpeg;base64, ${artBase64String}`;
   const cardPattern = startPattern;
-  const imageToShow = showImage ? cardImage : cardPattern;
+  const imageToShow = shown ? cardImage : cardPattern;
   const toggleCard = () => {
-    setShowImage(!showImage);
+    console.log('togglecard running with this card data:', cardData);
+    showCardViaDataCardIndex(cardData.dataCardIndex);
+    // hideUnsolvedCardsMatches();
+    //the method above will peruse the cadDeck in the deck store and if there are more than one 'shown' cards that are not also 'solved', then those cards will have
+    //their 'shown' set to false
   };
   const imgTag = artBase64String ? <StyledImageTag className="card-image-tag" src={imageToShow} /> : null;
   return (

@@ -24,21 +24,15 @@ export const Game = () => {
     );
     // let response = await axios.post(`/api/ai-picture`, {prompts});
     let response = mockAPIResponse;
-    console.log("generateArtCards response", response);
     setCardArtObjects(response.data);
-    // for (const el of response.data) {
-    //   console.log('fucker', el);
-    //   addCard(el);
-    //   addCard(el);
-    // }
     response.data.forEach(el => {
+      console.log('el', el);
       addCard(el);
       addCard(el);
     });
     shuffleDeck();
   };
   useEffect(() => {
-    console.log("shiggy", prompts);
     if (prompts.length === 8) {
       console.log("booyah");
       generateArtCards();
@@ -49,7 +43,6 @@ export const Game = () => {
       hideLoader();
     }
   }, cardArtObjects);
-  console.log('what we weill set as the thing for cardartObjects in cardtable', cardArtObjects);
   return (
     <>
       {prompts.length !== 8 && <Prompts />}
