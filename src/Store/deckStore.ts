@@ -44,10 +44,18 @@ const deckStore = (set: any) => ({
           if (!el.solved && el.shown) {
             return el;
           }
-        }).length;
-        if (twoShownUnsolvedInDeck >= 2) {
-          console.log('TWO SHOWN UNSOLVED IN DECK');
-          if (!el.solved) {
+        });
+        console.log("twoShownUNsolvedInDeck Deck", twoShownUnsolvedInDeck);
+        if (twoShownUnsolvedInDeck.length >= 2) {
+          console.log("TWO SHOWN UNSOLVED IN DECK");
+          if (
+            !el.solved &&
+            el.shown && 
+            twoShownUnsolvedInDeck[0].prompt ===
+              twoShownUnsolvedInDeck[1].prompt
+          ) {
+            return { ...el, shown: true, solved: true };
+          } else if (!el.solved) {
             return { ...el, shown: false };
           } else {
             return el;
@@ -57,15 +65,6 @@ const deckStore = (set: any) => ({
         }
       }),
     }));
-  },
-  setSolved: (dataCardIndex: number, cardPromptText: string) => {
-    set((state: any) => ({
-      cardDeck: state.cardDeck.map((el: any) => {
-        //if its shown
-        //if it has the same cardTextPrompt
-        //then the card with the Index and the matching one get the 'solved' true attribute.
-      })
-    }))
   },
   shuffleDeck: () => {
     set((state: any) => ({
