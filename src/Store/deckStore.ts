@@ -4,6 +4,7 @@ import create from "zustand";
 //set is used simply to change the state of any variable
 const deckStore = (set: any) => ({
   cardDeck: [],
+  gameComplete: false,
   //actions - manipulators
   addCard: (card: any) => {
     set((state: any) => ({
@@ -21,12 +22,9 @@ const deckStore = (set: any) => ({
     }));
   },
   showCardViaDataCardIndex: (dataCardIndex: number) => {
-    console.log("scvdci", dataCardIndex);
     set((state: any) => ({
       cardDeck: state.cardDeck.map((el: any) => {
-        console.log("das el", el);
         if (el.dataId === dataCardIndex) {
-          console.log("make a truey");
           return {
             ...el,
             shown: true,
@@ -45,9 +43,7 @@ const deckStore = (set: any) => ({
             return el;
           }
         });
-        console.log("twoShownUNsolvedInDeck Deck", twoShownUnsolvedInDeck);
         if (twoShownUnsolvedInDeck.length >= 2) {
-          console.log("TWO SHOWN UNSOLVED IN DECK");
           if (
             !el.solved &&
             el.shown && 
@@ -65,6 +61,11 @@ const deckStore = (set: any) => ({
         }
       }),
     }));
+  },
+  checkIfMemoryIsComplete: () => {
+    set((state: any) => ({
+      gameComplete: state.cardDeck.filter((el: any) => el.solved).length === 16
+    }))
   },
   shuffleDeck: () => {
     set((state: any) => ({

@@ -21,24 +21,28 @@ const StyledImageTag = styled.img`
 `;
 
 export const Card: FC<ICard> = (cardData) => {
+  const cardDeck = useDeckStore((state) => state.cardDeck);
   const showCardViaDataCardIndex = useDeckStore(
     (state) => state.showCardViaDataCardIndex
   );
   const hideUnsolvedCardsMatches = useDeckStore(
     (state) => state.hideUnsolvedCardsMatches
   );
-  console.log("card", cardData);
-  const { artBase64String, cardPromptText, shown, solved, dataCardIndex } = cardData;
+  const checkIfMemoryIsComplete = useDeckStore(
+    (state) => state.checkIfMemoryIsComplete
+  );
+  const { artBase64String, cardPromptText, shown, solved, dataCardIndex } =
+    cardData;
   const cardImage = `data:image/jpeg;base64, ${artBase64String}`;
   const cardPattern = startPattern;
   const imageToShow = shown ? cardImage : cardPattern;
   const toggleCard = () => {
     if (!shown) {
-      console.log("togglecard running with this card data:", cardData);
       showCardViaDataCardIndex(cardData.dataCardIndex);
       setTimeout(() => {
         hideUnsolvedCardsMatches();
-      }, 1500);
+        checkIfMemoryIsComplete();
+      }, 900);
     }
   };
   const imgTag = artBase64String ? (

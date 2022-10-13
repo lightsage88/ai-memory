@@ -28,7 +28,6 @@ export const Prompts = () => {
       let el = inputs[i];
       el.value = '';
     }
-    console.log("hokey pokey", inputs);
   };
 
   /**
@@ -65,7 +64,6 @@ export const Prompts = () => {
   const setComponentPromptsInState = () => {
     addPromptArray(prompts);
   };
-  console.log("zustandPrompts: ", zustandPrompts);
   return (
     <StyledComponents.StyledPromptsDialog
       open={true}

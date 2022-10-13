@@ -16,9 +16,7 @@ const StyledCardTable = styled.div`
 export const Cardtable: FC<ICardtable> = (cardArtObjects) => {
   const cardDeck = useDeckStore((state) => state.cardDeck);
   const memoryCards = () => {
-    console.log("cardDeck bitch", cardDeck);
     return cardDeck.map((el, index) => {
-      console.log("wolbocho", index);
       return (
         <Card
           cardPromptText={el["prompt"]}

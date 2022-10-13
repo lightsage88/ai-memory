@@ -15,7 +15,6 @@ export const Navigation = () => {
       </Link>
 
       <Link
-        onClick={() => console.log("game-tab clicked")}
         data-testid="game-tab"
         to="/game"
       >
