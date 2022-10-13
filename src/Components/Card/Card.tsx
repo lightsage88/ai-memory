@@ -24,6 +24,7 @@ const StyledImageTag = styled.img`
 
 export const Card: FC<ICard> = (cardData) => {
   const showCardViaDataCardIndex = useDeckStore((state) => state.showCardViaDataCardIndex);
+  const hideUnsolvedCardsMatches = useDeckStore((state) => state.hideUnsolvedCardsMatches);
   console.log("card", cardData);
   const { artBase64String, cardPromptText, shown, solved } = cardData;
   const cardImage = `data:image/jpeg;base64, ${artBase64String}`;
@@ -32,6 +33,10 @@ export const Card: FC<ICard> = (cardData) => {
   const toggleCard = () => {
     console.log('togglecard running with this card data:', cardData);
     showCardViaDataCardIndex(cardData.dataCardIndex);
+    setSolved();
+    setTimeout(() => {
+      hideUnsolvedCardsMatches();
+    }, 1500);
     // hideUnsolvedCardsMatches();
     //the method above will peruse the cadDeck in the deck store and if there are more than one 'shown' cards that are not also 'solved', then those cards will have
     //their 'shown' set to false

@@ -24,9 +24,9 @@ const deckStore = (set: any) => ({
     console.log("scvdci", dataCardIndex);
     set((state: any) => ({
       cardDeck: state.cardDeck.map((el: any) => {
-        console.log('das el', el);
+        console.log("das el", el);
         if (el.dataId === dataCardIndex) {
-          console.log('make a truey');
+          console.log("make a truey");
           return {
             ...el,
             shown: true,
@@ -40,7 +40,30 @@ const deckStore = (set: any) => ({
   hideUnsolvedCardsMatches: () => {
     set((state: any) => ({
       cardDeck: state.cardDeck.map((el: any) => {
-        
+        const twoShownUnsolvedInDeck = state.cardDeck.filter((el: any) => {
+          if (!el.solved && el.shown) {
+            return el;
+          }
+        }).length;
+        if (twoShownUnsolvedInDeck >= 2) {
+          console.log('TWO SHOWN UNSOLVED IN DECK');
+          if (!el.solved) {
+            return { ...el, shown: false };
+          } else {
+            return el;
+          }
+        } else {
+          return el;
+        }
+      }),
+    }));
+  },
+  setSolved: (dataCardIndex: number, cardPromptText: string) => {
+    set((state: any) => ({
+      cardDeck: state.cardDeck.map((el: any) => {
+        //if its shown
+        //if it has the same cardTextPrompt
+        //then the card with the Index and the matching one get the 'solved' true attribute.
       })
     }))
   },
