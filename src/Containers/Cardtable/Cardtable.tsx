@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import { ICardtable } from "../../Interfaces/Cardtable";
 import { Card } from "../../Components/Card/Card";
 import useDeckStore from "../../Store/deckStore";
 import styled from "styled-components";
@@ -13,7 +12,7 @@ const StyledCardTable = styled.div`
   margin: auto;
 `;
 
-export const Cardtable: FC<ICardtable> = (cardArtObjects) => {
+export const Cardtable: FC = () => {
   const cardDeck = useDeckStore((state) => state.cardDeck);
   const memoryCards = () => {
     return cardDeck.map((el, index) => {
@@ -25,7 +24,6 @@ export const Cardtable: FC<ICardtable> = (cardArtObjects) => {
           dataCardIndex={el['dataId']}
           shown={el['shown']}
           solved={el['solved']}
-
         />
       );
     });

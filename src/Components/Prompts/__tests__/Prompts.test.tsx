@@ -1,10 +1,10 @@
 import "@testing-library/jest-dom";
 import { render, screen, within, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Game from "../Game";
+import Game from '../../../Containers/Game/Game';
 import artCardsMockData from '../../../Mock/api-data.json';
 import { createMemoryHistory } from "history";
-describe("The Game Component", () => {
+describe("The Prompts", () => {
   const ENV = process.env;
   beforeEach(() => {
     jest.resetModules();

@@ -1,13 +1,12 @@
 import "@testing-library/jest-dom";
-import { render, screen, within, fireEvent } from "@testing-library/react";
+import { render, screen, within, fireEvent, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import AppWrapper from "../AppWrapper";
+import AppWrapper from "../../../AppWrapper";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-describe("The App", () => {
+describe("The Cardtable", () => {
   const ENV = process.env;
-
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.resetModules();
     process.env = { ...ENV };
     const history = createMemoryHistory();
@@ -16,44 +15,16 @@ describe("The App", () => {
         <AppWrapper />
       </Router>
     );
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  afterAll(() => {
-    process.env = ENV;
-  });
-
-  it("should open the app and offer a greeting and directions", () => {
-    const greeting = screen.getByText(/welcome to ai memory!/i);
-    const directions = screen.getByText(/to begin, click the 'game' tab./i);
-    expect(greeting.textContent).toBe("Welcome to AI Memory!");
-    expect(directions.textContent).toBe("To begin, click the 'Game' tab.");
-  });
-
-  it("should display some navigational tabs at the top", () => {
-    const homeTab = screen.getByTestId("home-tab");
-    const gameTab = screen.getByTestId("game-tab");
-    const aboutTab = screen.getByTestId("about-tab");
-    expect(homeTab.textContent).toBe("Home");
-    expect(gameTab.textContent).toBe("Game");
-    expect(aboutTab.textContent).toBe("About");
-  });
-
-  it("should take us to the game screen when the gameTab is clicked", async () => {
     const user = userEvent.setup();
     const gameTab = screen.getByTestId("game-tab");
     await user.click(gameTab);
-    // const gameDirections = screen.getByRole("heading", {
-    //   name: /enter 8 descriptions for the ai to make pictures from\./i,
-    // });
-    const gameInstructions = screen.getByText(
-      /enter 8 descriptions for the ai to make pictures from\./i
-    );
-    expect(gameInstructions).toBeInTheDocument();
   });
+
+  afterEach(() => {
+    cleanup();
+  })
+
+  
 
   it('should show a message about waiting for the art to be made once the "Lets Rock" button is clicked', () => {
     process.env.REACT_APP_USE_MOCK_DATA = "true";
@@ -141,22 +112,37 @@ describe("The App", () => {
   });
 
   it("should show the mock data cards; there should be two per each prompt", () => {
+    process.env.REACT_APP_USE_MOCK_DATA = "true";
+
     //Show cards
-    const catsOnCheeseCards = screen.queryAllByTestId('cats on cheese');
+    const cardBackImageCards = screen.queryAllByTestId("cardback-image");
+    expect(cardBackImageCards).toHaveLength(16);
+    const catsOnCheeseCards = screen.queryAllByTestId("cats on cheese");
     expect(catsOnCheeseCards).toHaveLength(2);
-    const chinaCards = screen.queryAllByTestId('china');
+    const chinaCards = screen.queryAllByTestId("china");
     expect(chinaCards).toHaveLength(2);
-    const ganondorfCards = screen.queryAllByTestId('ganondorf');
+    const ganondorfCards = screen.queryAllByTestId("ganondorf");
     expect(ganondorfCards).toHaveLength(2);
     const marioCards = screen.queryAllByTestId("mario");
     expect(marioCards).toHaveLength(2);
-    const mexicoCards = screen.queryAllByTestId('mexico');
+    const mexicoCards = screen.queryAllByTestId("mexico");
     expect(mexicoCards).toHaveLength(2);
     const luigiCards = screen.queryAllByTestId("luigi");
     expect(luigiCards).toHaveLength(2);
-    const operaCards = screen.queryAllByTestId('opera');
+    const operaCards = screen.queryAllByTestId("opera");
     expect(operaCards).toHaveLength(2);
-    const zeldaCards = screen.queryAllByTestId('zelda');
+    const zeldaCards = screen.queryAllByTestId("zelda");
     expect(zeldaCards).toHaveLength(2);
+  });
+
+  it("should display an image when a card is clicked", () => {
+    process.env.REACT_APP_USE_MOCK_DATA = "true";
+    const firstCardBackImageCards = screen.queryAllByTestId("cardback-image");
+    expect(firstCardBackImageCards).toHaveLength(16);
+    const marioCards = screen.queryAllByTestId("mario");
+    expect(marioCards).toHaveLength(2);
+    fireEvent.click(marioCards[0]);
+    const marioImage = screen.queryAllByTestId('mario-image');
+    expect(marioImage).toHaveLength(1);
   });
 });
