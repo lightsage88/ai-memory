@@ -15,7 +15,7 @@ describe("The Cardtable", () => {
   const ENV = process.env;
   beforeEach(async () => {
     jest.resetModules();
-    jest.setTimeout(10000);
+    // jest.setTimeout(10000);
 
     process.env = { ...ENV };
     const history = createMemoryHistory();
@@ -176,5 +176,64 @@ describe("The Cardtable", () => {
     expect(screen.queryAllByTestId("mario-image")).toHaveLength(2);
 
     expect(screen.queryAllByTestId("cardback-image")).toHaveLength(14);
+  });
+
+  it("should clear the screen of cards once all matches have been made successfully", () => {
+    process.env.REACT_APP_USE_MOCK_DATA = "true";
+
+    //Show cards
+    act(() => {
+      const cardBackImageCards = screen.queryAllByTestId("cardback-image");
+      expect(cardBackImageCards).toHaveLength(16);
+      const catsOnCheeseCards = screen.queryAllByTestId("cats on cheese");
+      expect(catsOnCheeseCards).toHaveLength(2);
+      const chinaCards = screen.queryAllByTestId("china");
+      expect(chinaCards).toHaveLength(2);
+      const ganondorfCards = screen.queryAllByTestId("ganondorf");
+      expect(ganondorfCards).toHaveLength(2);
+      const marioCards = screen.queryAllByTestId("mario");
+      expect(marioCards).toHaveLength(2);
+      const mexicoCards = screen.queryAllByTestId("mexico");
+      expect(mexicoCards).toHaveLength(2);
+      const luigiCards = screen.queryAllByTestId("luigi");
+      expect(luigiCards).toHaveLength(2);
+      const operaCards = screen.queryAllByTestId("opera");
+      expect(operaCards).toHaveLength(2);
+      const zeldaCards = screen.queryAllByTestId("zelda");
+      expect(zeldaCards).toHaveLength(2);
+      for (let card of catsOnCheeseCards) {
+        fireEvent.click(card);
+      }
+
+      for (let card of chinaCards) {
+        fireEvent.click(card);
+      }
+
+      for (let card of ganondorfCards) {
+        fireEvent.click(card);
+      }
+
+      for (let card of marioCards) {
+        fireEvent.click(card);
+      }
+
+      for (let card of luigiCards) {
+        fireEvent.click(card);
+      }
+
+      for (let card of mexicoCards) {
+        fireEvent.click(card);
+      }
+
+      for (let card of operaCards) {
+        fireEvent.click(card);
+      }
+
+      for (let card of zeldaCards) {
+        fireEvent.click(card);
+      }
+    })
+    const matchingTableDiv = screen.getByTestId('matching-table-div');
+    expect(matchingTableDiv).toBeInTheDocument();
   });
 });

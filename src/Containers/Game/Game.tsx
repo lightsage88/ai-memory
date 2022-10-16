@@ -52,14 +52,14 @@ export const Game = () => {
     if (prompts.length === 8) {
       generateArtCards();
     }
-  }, prompts);
+  }, [prompts]);
   useEffect(() => {
     if (cardArtObjects.length !== 0) {
       // setTimeout(() => {
       hideLoader();
       // }, 5000);
     }
-  }, cardArtObjects);
+  }, [cardArtObjects]);
   return (
     <>
       {prompts.length !== 8 && <Prompts />}
