@@ -11,8 +11,11 @@ export const App = () => {
   const loaderMessage = useLoaderStore((state) => state.loaderMessage);
   return (
     <>
-    {displayLoader && <Loader message={loaderMessage} />}
+      {displayLoader && <Loader message={loaderMessage} />}
+
       <Router>
+        <Navigation />
+
         <Switch>
           <Route path="/game">
             <Game />
@@ -21,8 +24,6 @@ export const App = () => {
             <Home />
           </Route>
         </Switch>
-        <Navigation />
-
       </Router>
     </>
   );

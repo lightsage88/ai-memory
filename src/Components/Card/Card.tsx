@@ -44,10 +44,10 @@ export const Card: FC<ICard> = (cardData) => {
   const toggleCard = () => {
     if (!shown) {
       showCardViaDataCardIndex(cardData.dataCardIndex);
-      // setTimeout(() => {
+      setTimeout(() => {
         hideUnsolvedCardsMatches();
         checkIfMemoryIsComplete();
-      // }, 900);
+      }, 900);
     }
   };
   const imgTag = artBase64String ? (

@@ -15,6 +15,7 @@ describe("The Cardtable", () => {
   const ENV = process.env;
   beforeEach(async () => {
     jest.resetModules();
+    jest.runOnlyPendingTimers();
     // jest.setTimeout(10000);
 
     process.env = { ...ENV };
@@ -148,6 +149,7 @@ describe("The Cardtable", () => {
 
   it("should flip cards over if they are not related", () => {
     process.env.REACT_APP_USE_MOCK_DATA = "true";
+    jest.useFakeTimers();
     const firstCardBackImageCards = screen.queryAllByTestId("cardback-image");
     expect(firstCardBackImageCards).toHaveLength(16);
     const marioCards = screen.queryAllByTestId("mario");
@@ -160,7 +162,10 @@ describe("The Cardtable", () => {
     expect(screen.queryAllByTestId("cardback-image")).toHaveLength(15);
     fireEvent.click(luigiCards[0]);
     const luigiImage = screen.queryAllByTestId("luigi-image");
+    expect(screen.queryAllByTestId("cardback-image")).toHaveLength(14);
+    jest.advanceTimersByTime(100000);
     expect(screen.queryAllByTestId("cardback-image")).toHaveLength(16);
+    jest.useRealTimers();
   });
 
   it("should keep pairs shown", () => {
@@ -174,66 +179,66 @@ describe("The Cardtable", () => {
     expect(marioImage).toHaveLength(1);
     fireEvent.click(marioCards[1]);
     expect(screen.queryAllByTestId("mario-image")).toHaveLength(2);
-
     expect(screen.queryAllByTestId("cardback-image")).toHaveLength(14);
   });
 
   it("should clear the screen of cards once all matches have been made successfully", () => {
     process.env.REACT_APP_USE_MOCK_DATA = "true";
-
+    jest.useFakeTimers();
     //Show cards
-    act(() => {
-      const cardBackImageCards = screen.queryAllByTestId("cardback-image");
-      expect(cardBackImageCards).toHaveLength(16);
-      const catsOnCheeseCards = screen.queryAllByTestId("cats on cheese");
-      expect(catsOnCheeseCards).toHaveLength(2);
-      const chinaCards = screen.queryAllByTestId("china");
-      expect(chinaCards).toHaveLength(2);
-      const ganondorfCards = screen.queryAllByTestId("ganondorf");
-      expect(ganondorfCards).toHaveLength(2);
-      const marioCards = screen.queryAllByTestId("mario");
-      expect(marioCards).toHaveLength(2);
-      const mexicoCards = screen.queryAllByTestId("mexico");
-      expect(mexicoCards).toHaveLength(2);
-      const luigiCards = screen.queryAllByTestId("luigi");
-      expect(luigiCards).toHaveLength(2);
-      const operaCards = screen.queryAllByTestId("opera");
-      expect(operaCards).toHaveLength(2);
-      const zeldaCards = screen.queryAllByTestId("zelda");
-      expect(zeldaCards).toHaveLength(2);
-      for (let card of catsOnCheeseCards) {
-        fireEvent.click(card);
-      }
+    // act(() => {
+    const cardBackImageCards = screen.queryAllByTestId("cardback-image");
+    expect(cardBackImageCards).toHaveLength(16);
+    const catsOnCheeseCards = screen.queryAllByTestId("cats on cheese");
+    expect(catsOnCheeseCards).toHaveLength(2);
+    const chinaCards = screen.queryAllByTestId("china");
+    expect(chinaCards).toHaveLength(2);
+    const ganondorfCards = screen.queryAllByTestId("ganondorf");
+    expect(ganondorfCards).toHaveLength(2);
+    const marioCards = screen.queryAllByTestId("mario");
+    expect(marioCards).toHaveLength(2);
+    const mexicoCards = screen.queryAllByTestId("mexico");
+    expect(mexicoCards).toHaveLength(2);
+    const luigiCards = screen.queryAllByTestId("luigi");
+    expect(luigiCards).toHaveLength(2);
+    const operaCards = screen.queryAllByTestId("opera");
+    expect(operaCards).toHaveLength(2);
+    const zeldaCards = screen.queryAllByTestId("zelda");
+    expect(zeldaCards).toHaveLength(2);
+    for (let card of catsOnCheeseCards) {
+      fireEvent.click(card);
+    }
 
-      for (let card of chinaCards) {
-        fireEvent.click(card);
-      }
+    for (let card of chinaCards) {
+      fireEvent.click(card);
+    }
 
-      for (let card of ganondorfCards) {
-        fireEvent.click(card);
-      }
+    for (let card of ganondorfCards) {
+      fireEvent.click(card);
+    }
 
-      for (let card of marioCards) {
-        fireEvent.click(card);
-      }
+    for (let card of marioCards) {
+      fireEvent.click(card);
+    }
 
-      for (let card of luigiCards) {
-        fireEvent.click(card);
-      }
+    for (let card of luigiCards) {
+      fireEvent.click(card);
+    }
 
-      for (let card of mexicoCards) {
-        fireEvent.click(card);
-      }
+    for (let card of mexicoCards) {
+      fireEvent.click(card);
+    }
 
-      for (let card of operaCards) {
-        fireEvent.click(card);
-      }
+    for (let card of operaCards) {
+      fireEvent.click(card);
+    }
 
-      for (let card of zeldaCards) {
-        fireEvent.click(card);
-      }
-    })
-    const matchingTableDiv = screen.getByTestId('matching-table-div');
+    for (let card of zeldaCards) {
+      fireEvent.click(card);
+    }
+    // });
+    jest.advanceTimersByTime(10000);
+    const matchingTableDiv = screen.getByTestId("matching-table-div");
     expect(matchingTableDiv).toBeInTheDocument();
   });
 });
