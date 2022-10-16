@@ -16,8 +16,7 @@ describe("The Cardtable", () => {
   beforeEach(async () => {
     jest.resetModules();
     jest.runOnlyPendingTimers();
-    // jest.setTimeout(10000);
-
+    //TODO:FIND WAY TO RESET STATE
     process.env = { ...ENV };
     const history = createMemoryHistory();
     render(

@@ -133,7 +133,7 @@ describe("The App", () => {
   });
 
   it("should show the mock data cards; there should be two per each prompt", () => {
-    //Show cards
+    //Show cards 
     const catsOnCheeseCards = screen.queryAllByTestId('cats on cheese');
     expect(catsOnCheeseCards).toHaveLength(2);
     const chinaCards = screen.queryAllByTestId('china');
