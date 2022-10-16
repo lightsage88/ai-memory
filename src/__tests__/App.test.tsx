@@ -130,14 +130,6 @@ describe("The App", () => {
     expect(letsRockButton).not.toBeDisabled();
     //Click the Lets Rock Button
     fireEvent.click(letsRockButton);
-    //Find Loader Message and Spinner
-    const loaderSpinner = screen.getByTestId("loader-circular-progress");
-    const loaderMessage = screen.getByTestId("loader-message");
-    expect(loaderSpinner).toBeVisible();
-    expect(loaderMessage).toBeVisible();
-    expect(loaderMessage.textContent).toBe(
-      "This will take 5 to 8 minutes at least, go get a snack...you can't rush art, even when a computer is at the wheel."
-    );
   });
 
   it("should show the mock data cards; there should be two per each prompt", () => {

@@ -40,7 +40,7 @@ export const Game = () => {
     );
     let response =
       useMockData === "true" ? mockAPIResponse.data : await makeAIPost(prompts);
-      console.log('lets see the response', response);
+    console.log("lets see the response", response);
     setCardArtObjects(response);
     Array.from(response).forEach((el: any) => {
       addCard(el);
@@ -55,9 +55,9 @@ export const Game = () => {
   }, prompts);
   useEffect(() => {
     if (cardArtObjects.length !== 0) {
-      setTimeout(() => {
-        hideLoader();
-      }, 5000);
+      // setTimeout(() => {
+      hideLoader();
+      // }, 5000);
     }
   }, cardArtObjects);
   return (

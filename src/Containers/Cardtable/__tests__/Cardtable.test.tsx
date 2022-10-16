@@ -1,5 +1,12 @@
 import "@testing-library/jest-dom";
-import { render, screen, within, fireEvent, cleanup } from "@testing-library/react";
+import {
+  render,
+  screen,
+  within,
+  fireEvent,
+  cleanup,
+  act,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AppWrapper from "../../../AppWrapper";
 import { Router } from "react-router-dom";
@@ -8,6 +15,8 @@ describe("The Cardtable", () => {
   const ENV = process.env;
   beforeEach(async () => {
     jest.resetModules();
+    jest.setTimeout(10000);
+
     process.env = { ...ENV };
     const history = createMemoryHistory();
     render(
@@ -22,9 +31,7 @@ describe("The Cardtable", () => {
 
   afterEach(() => {
     cleanup();
-  })
-
-  
+  });
 
   it('should show a message about waiting for the art to be made once the "Lets Rock" button is clicked', () => {
     process.env.REACT_APP_USE_MOCK_DATA = "true";
@@ -101,14 +108,6 @@ describe("The Cardtable", () => {
     expect(letsRockButton).not.toBeDisabled();
     //Click the Lets Rock Button
     fireEvent.click(letsRockButton);
-    //Find Loader Message and Spinner
-    const loaderSpinner = screen.getByTestId("loader-circular-progress");
-    const loaderMessage = screen.getByTestId("loader-message");
-    expect(loaderSpinner).toBeVisible();
-    expect(loaderMessage).toBeVisible();
-    expect(loaderMessage.textContent).toBe(
-      "This will take 5 to 8 minutes at least, go get a snack...you can't rush art, even when a computer is at the wheel."
-    );
   });
 
   it("should show the mock data cards; there should be two per each prompt", () => {
@@ -142,7 +141,40 @@ describe("The Cardtable", () => {
     const marioCards = screen.queryAllByTestId("mario");
     expect(marioCards).toHaveLength(2);
     fireEvent.click(marioCards[0]);
-    const marioImage = screen.queryAllByTestId('mario-image');
+    const marioImage = screen.queryAllByTestId("mario-image");
     expect(marioImage).toHaveLength(1);
+    expect(screen.queryAllByTestId("cardback-image")).toHaveLength(15);
+  });
+
+  it("should flip cards over if they are not related", () => {
+    process.env.REACT_APP_USE_MOCK_DATA = "true";
+    const firstCardBackImageCards = screen.queryAllByTestId("cardback-image");
+    expect(firstCardBackImageCards).toHaveLength(16);
+    const marioCards = screen.queryAllByTestId("mario");
+    expect(marioCards).toHaveLength(2);
+    const luigiCards = screen.queryAllByTestId("luigi");
+    expect(luigiCards).toHaveLength(2);
+    fireEvent.click(marioCards[0]);
+    const marioImage = screen.queryAllByTestId("mario-image");
+    expect(marioImage).toHaveLength(1);
+    expect(screen.queryAllByTestId("cardback-image")).toHaveLength(15);
+    fireEvent.click(luigiCards[0]);
+    const luigiImage = screen.queryAllByTestId("luigi-image");
+    expect(screen.queryAllByTestId("cardback-image")).toHaveLength(16);
+  });
+
+  it("should keep pairs shown", () => {
+    process.env.REACT_APP_USE_MOCK_DATA = "true";
+    const firstCardBackImageCards = screen.queryAllByTestId("cardback-image");
+    expect(firstCardBackImageCards).toHaveLength(16);
+    const marioCards = screen.queryAllByTestId("mario");
+    expect(marioCards).toHaveLength(2);
+    fireEvent.click(marioCards[0]);
+    const marioImage = screen.queryAllByTestId("mario-image");
+    expect(marioImage).toHaveLength(1);
+    fireEvent.click(marioCards[1]);
+    expect(screen.queryAllByTestId("mario-image")).toHaveLength(2);
+
+    expect(screen.queryAllByTestId("cardback-image")).toHaveLength(14);
   });
 });
