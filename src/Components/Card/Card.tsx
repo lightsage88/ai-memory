@@ -7,17 +7,18 @@ import StartPattern from "../../Assets/Images/starPattern.jpeg";
 
 const StyledMaterialUICard = styled(MatCard)`
   width: fit-content;
+  height: inherit;
 `;
 
 const StyledCardWrapperDiv = styled.div`
   width: fit-content;
-  height: 256px;
-  min-width: 256px;
+  height: 20vw;
+  min-width: 20vw;
 `;
 
 const StyledImageTag = styled.img`
-  width: 256px;
-  height: 256px;
+  width: 20vw;
+  height: 20vw;
 `;
 
 const StyledHiddenStrongText = styled.strong`

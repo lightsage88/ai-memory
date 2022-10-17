@@ -13,7 +13,6 @@ const StyledCardTable = styled.div`
 `;
 
 export const Cardtable: FC = () => {
-  // const cardDeck = useDeckStore((state) => state.cardDeck);
   const { cardDeck } = useDeckStore();
   const memoryCards = () => {
     return cardDeck.map((el, index) => {
