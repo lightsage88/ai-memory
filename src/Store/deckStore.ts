@@ -5,6 +5,7 @@ import create from "zustand";
 const deckStore = (set: any) => ({
   cardDeck: [],
   gameComplete: false,
+  
   //actions - manipulators
   addCard: (card: any) => {
     set((state: any) => ({

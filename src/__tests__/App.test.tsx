@@ -4,10 +4,14 @@ import userEvent from "@testing-library/user-event";
 import AppWrapper from "../AppWrapper";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
+import useDeckStore from '../Store/deckStore';
+
 describe("The App", () => {
+  const originalState = useDeckStore.getState();
   const ENV = process.env;
 
   beforeEach(() => {
+    useDeckStore.setState(originalState, true);
     jest.resetModules();
     process.env = { ...ENV };
     const history = createMemoryHistory();

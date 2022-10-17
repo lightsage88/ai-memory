@@ -51,13 +51,21 @@ export const Card: FC<ICard> = (cardData) => {
     }
   };
   const imgTag = artBase64String ? (
-    <StyledImageTag className="card-image-tag" src={imageToShow} data-testid={shown ? `${cardPromptText.toLowerCase()}-image` : 'cardback-image'}/>
+    <StyledImageTag
+      className="card-image-tag"
+      src={imageToShow}
+      data-testid={
+        shown ? `${cardPromptText.toLowerCase()}-image` : "cardback-image"
+      }
+    />
   ) : null;
   return (
     <>
       <StyledCardWrapperDiv onClick={toggleCard}>
         <StyledMaterialUICard>
-          <StyledHiddenStrongText data-testid={cardPromptText.toLowerCase()}>{cardPromptText}</StyledHiddenStrongText>
+          <StyledHiddenStrongText data-testid={cardPromptText.toLowerCase()}>
+            {cardPromptText}
+          </StyledHiddenStrongText>
           {imgTag}
         </StyledMaterialUICard>
       </StyledCardWrapperDiv>

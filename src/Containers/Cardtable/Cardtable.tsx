@@ -13,7 +13,8 @@ const StyledCardTable = styled.div`
 `;
 
 export const Cardtable: FC = () => {
-  const cardDeck = useDeckStore((state) => state.cardDeck);
+  // const cardDeck = useDeckStore((state) => state.cardDeck);
+  const { cardDeck } = useDeckStore();
   const memoryCards = () => {
     return cardDeck.map((el, index) => {
       return (
@@ -21,9 +22,9 @@ export const Cardtable: FC = () => {
           cardPromptText={el["prompt"]}
           artBase64String={el["artBase64"]}
           key={index}
-          dataCardIndex={el['dataId']}
-          shown={el['shown']}
-          solved={el['solved']}
+          dataCardIndex={el["dataId"]}
+          shown={el["shown"]}
+          solved={el["solved"]}
         />
       );
     });

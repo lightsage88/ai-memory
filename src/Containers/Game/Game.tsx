@@ -10,12 +10,15 @@ import mockAPIResponse from "../../Mock/api-data/art-cards.json";
 export const Game = () => {
   const useMockData = process.env.REACT_APP_USE_MOCK_DATA;
   const [cardArtObjects, setCardArtObjects] = useState<any>(Array.of(8));
-  const showLoader = useLoaderStore((state) => state.showLoader);
-  const hideLoader = useLoaderStore((state) => state.hideLoader);
-  const addCard = useDeckStore((state) => state.addCard);
-  const shuffleDeck = useDeckStore((state) => state.shuffleDeck);
-  const memoryComplete = useDeckStore((state) => state.gameComplete);
-  const prompts = usePromptStore((state) => state.prompts);
+  const { addCard, shuffleDeck, gameComplete } = useDeckStore();
+  const { showLoader, hideLoader } = useLoaderStore();
+  const { prompts } = usePromptStore();
+  // const showLoader = useLoaderStore((state) => state.showLoader);
+  // const hideLoader = useLoaderStore((state) => state.hideLoader);
+  // const addCard = useDeckStore((state) => state.addCard);
+  // const shuffleDeck = useDeckStore((state) => state.shuffleDeck);
+  // const memoryComplete = useDeckStore((state) => state.gameComplete);
+  // const prompts = usePromptStore((state) => state.prompts);
 
   const makeAIPost = async (prompts: any) => {
     try {
@@ -40,7 +43,6 @@ export const Game = () => {
     );
     let response =
       useMockData === "true" ? mockAPIResponse.data : await makeAIPost(prompts);
-    console.log("lets see the response", response);
     setCardArtObjects(response);
     Array.from(response).forEach((el: any) => {
       addCard(el);
@@ -63,8 +65,8 @@ export const Game = () => {
   return (
     <>
       {prompts.length !== 8 && <Prompts />}
-      {prompts.length === 8 && !memoryComplete && <Cardtable />}
-      {memoryComplete && <Matchingtable />}
+      {prompts.length === 8 && !gameComplete && <Cardtable />}
+      {gameComplete && <Matchingtable />}
     </>
   );
 };
