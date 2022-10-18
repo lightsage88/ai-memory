@@ -66,7 +66,7 @@ export const Game = () => {
     <>
       {prompts.length !== 8 && <Prompts />}
       {prompts.length === 8 && !gameComplete && <Cardtable />}
-      {gameComplete && <Matchingtable />}
+      {gameComplete && <Matchingtable cardArtsObjects={cardArtObjects}/>}
     </>
   );
 };

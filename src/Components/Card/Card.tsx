@@ -22,8 +22,8 @@ const StyledImageTag = styled.img`
 `;
 
 const StyledHiddenStrongText = styled.strong`
-  position: absolute;
-  visibility: hidden;
+  // position: absolute;
+  // visibility: hidden;
 `;
 
 export const Card: FC<ICard> = (cardData) => {
