@@ -40,10 +40,8 @@ describe("The App", () => {
   it("should display some navigational tabs at the top", () => {
     const homeTab = screen.getByTestId("home-tab");
     const gameTab = screen.getByTestId("game-tab");
-    const aboutTab = screen.getByTestId("about-tab");
     expect(homeTab.textContent).toBe("Home");
     expect(gameTab.textContent).toBe("Game");
-    expect(aboutTab.textContent).toBe("About");
   });
 
   it("should take us to the game screen when the gameTab is clicked", async () => {
