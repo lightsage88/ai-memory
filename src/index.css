@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "Kirby";
+  src: local("Kirby"),
+   url("./Assets/Fonts/kirby-classic.ttf") format("truetype");
+  }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

@@ -26,12 +26,6 @@ export const Navigation = () => {
       <Link data-testid="game-tab" to="/game">
         Game
       </Link>
-      {/* <StyledComponents.StyledNavLink
-        data-testid="about-tab"
-        onClick={() => resetGamePrompts()}
-      >
-        About
-      </StyledComponents.StyledNavLink> */}
     </StyledComponents.StyledBox>
   );
 };
