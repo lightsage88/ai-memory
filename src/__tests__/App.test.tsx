@@ -32,9 +32,9 @@ describe("The App", () => {
 
   it("should open the app and offer a greeting and directions", () => {
     const greeting = screen.getByText(/welcome to ai memory!/i);
-    const directions = screen.getByText(/to begin, click the 'game' tab./i);
+    const directions = screen.getByText(/to begin, click the 'game' button./i);
     expect(greeting.textContent).toBe("Welcome to AI Memory!");
-    expect(directions.textContent).toBe("To begin, click the 'Game' tab.");
+    expect(directions.textContent).toBe("To begin, click the 'Game' button.");
   });
 
   it("should display some navigational tabs at the top", () => {
