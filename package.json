@@ -65,7 +65,6 @@
     "jest-watch-typeahead": "^0.6.5",
     "jest-webpack-resolver": "^0.3.0"
   },
-  "proxy": "http://localhost:8080",
   "jestWebpackResolver": {
     "webpackConfig": "./webpack.config.js"
   }

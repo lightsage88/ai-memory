@@ -8,21 +8,17 @@ import Matchingtable from "../Matchingtable";
 import mockAPIResponse from "../../Mock/api-data/art-cards.json";
 
 export const Game = () => {
-  const useMockData = process.env.REACT_APP_USE_MOCK_DATA;
+  const useMockData = process.env.REACT_APP_USE_DEV_MODE;
   const [cardArtObjects, setCardArtObjects] = useState<any>(Array.of(8));
   const { addCard, shuffleDeck, gameComplete } = useDeckStore();
   const { showLoader, hideLoader } = useLoaderStore();
   const { prompts } = usePromptStore();
-  // const showLoader = useLoaderStore((state) => state.showLoader);
-  // const hideLoader = useLoaderStore((state) => state.hideLoader);
-  // const addCard = useDeckStore((state) => state.addCard);
-  // const shuffleDeck = useDeckStore((state) => state.shuffleDeck);
-  // const memoryComplete = useDeckStore((state) => state.gameComplete);
-  // const prompts = usePromptStore((state) => state.prompts);
 
+  const apiEndpoint = process.env.REACT_APP_DEV_MODE === 'false' ? 'https://ai-memory-api.onrender.com' : 'http://localhost:8080';
+  console.log('the apiEndpoint we are using right now: ', apiEndpoint);
   const makeAIPost = async (prompts: any) => {
     try {
-      const response = await fetch("/api/ai-picture", {
+      const response = await fetch(`${apiEndpoint}/api/ai-picture`, {
         method: "POST",
         headers: {
           Accept: "application/json, text/plain, */*",

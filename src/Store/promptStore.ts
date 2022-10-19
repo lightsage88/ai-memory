@@ -16,6 +16,11 @@ const promptStore = (set: any) => ({
       prompts: promptArray,
     }));
   },
+  clearPromptArray: () => {
+    set((state: any) => ({
+      prompts: Array.of(8)
+    }))
+  },
   removePrompt: (promptId: string | number) => {
     set((state: any) => ({
       prompts: state.prompts.filter((el: any) => el.id !== promptId),

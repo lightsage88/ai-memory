@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link, Dialog } from "@mui/material";
 
 const StyledNavLink = styled(Link)`
-  
+  cursor: pointer
 `;
 
 const StyledPromptsDialog = styled(Dialog)`
