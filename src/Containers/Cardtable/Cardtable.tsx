@@ -10,6 +10,8 @@ const StyledCardTable = styled.div`
   grid-gap: 1rem;
   width: fit-content;
   margin: auto;
+  background-color: #663d00;
+  background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
 `;
 
 export const Cardtable: FC = () => {

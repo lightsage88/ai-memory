@@ -10,12 +10,13 @@ interface imgProps {
 }
 
 interface cardWrapperDivProps {
-  borderStyle: string;
+  boxShadowStyle: string;
 }
 
 const StyledMaterialUICard = styled(MatCard)`
   width: fit-content;
   height: inherit;
+  background: rgba(0,0,0,0.3);
 `;
 
 const StyledCardWrapperDiv = styled.div<cardWrapperDivProps>`
@@ -24,12 +25,12 @@ const StyledCardWrapperDiv = styled.div<cardWrapperDivProps>`
     50% { transform: rotate3d(1, 1, 1, 180deg);}
     100% {transform: rotate3d(1, 1, 1, 0deg);}
   }
-
+  box-sizing: border-box;
   width: fit-content;
   height: 20vw;
   min-width: 20vw;
-  transition: border 2s;
-  border: ${(props) => props.borderStyle}
+  transition: box-shadow 1s;
+  box-shadow: ${(props) => props.boxShadowStyle}
   
 `;
 
@@ -94,7 +95,7 @@ export const Card: FC<ICard> = (cardData) => {
     <>
       <StyledCardWrapperDiv
         onClick={toggleCard}
-        borderStyle={solved ? "green solid 2px" : ""}
+        boxShadowStyle={solved ? "0.25rem 0.25rem green" : ""}
       >
         <StyledMaterialUICard>
           <StyledHiddenStrongText data-testid={cardPromptText.toLowerCase()}>
