@@ -19,20 +19,35 @@ const StyledMaterialUICard = styled(MatCard)`
 `;
 
 const StyledCardWrapperDiv = styled.div<cardWrapperDivProps>`
+  @keyframes cardFlip {
+    0% {transform: rotate3d(1, 1, 1, 0deg);}
+    50% { transform: rotate3d(1, 1, 1, 180deg);}
+    100% {transform: rotate3d(1, 1, 1, 0deg);}
+  }
+
   width: fit-content;
   height: 20vw;
   min-width: 20vw;
   transition: border 2s;
-  border: ${(props) => (props.borderStyle)}
+  border: ${(props) => props.borderStyle}
+  
 `;
-
 
 const StyledImageTag = styled.img<imgProps>`
 
   width: 20vw;
   height: 20vw;
-  transition: all 2s;
-  opacity: ${(props) => (props.opacityAmount)};
+  transition: all 1s;
+  opacity: ${(props) => props.opacityAmount}; 
+  &:active {
+    @keyframes cardFlip {
+      0% {transform: rotate3d(1, 1, 1, 0deg);}
+      50% { transform: rotate3d(1, 1, 1, 180deg);}
+      100% {transform: rotate3d(1, 1, 1, 0deg);}
+    }
+    animation-name: cardFlip;
+    animation-duration: .5s;
+  }
 `;
 
 const StyledHiddenStrongText = styled.strong`
@@ -77,7 +92,10 @@ export const Card: FC<ICard> = (cardData) => {
   ) : null;
   return (
     <>
-      <StyledCardWrapperDiv onClick={toggleCard} borderStyle={solved ? 'green solid 2px' : ''}>
+      <StyledCardWrapperDiv
+        onClick={toggleCard}
+        borderStyle={solved ? "green solid 2px" : ""}
+      >
         <StyledMaterialUICard>
           <StyledHiddenStrongText data-testid={cardPromptText.toLowerCase()}>
             {cardPromptText}
