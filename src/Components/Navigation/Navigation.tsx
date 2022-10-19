@@ -15,29 +15,24 @@ export const Navigation = () => {
   const resetGamePrompts = () => {
     clearDeck();
     clearPromptArray();
-  }
+  };
 
   return (
-    <Box
-      sx={{
-        border: "3px #007aaf solid",
-        display: "flex",
-      }}
-    >
+    <StyledComponents.StyledBox>
       <Link data-testid="home-tab" to="/" onClick={() => resetGamePrompts()}>
         Home
       </Link>
 
-      <Link
-        data-testid="game-tab"
-        to="/game"
-      >
+      <Link data-testid="game-tab" to="/game">
         Game
       </Link>
-      <StyledComponents.StyledNavLink data-testid="about-tab" onClick={() => resetGamePrompts()}>
+      {/* <StyledComponents.StyledNavLink
+        data-testid="about-tab"
+        onClick={() => resetGamePrompts()}
+      >
         About
-      </StyledComponents.StyledNavLink>
-    </Box>
+      </StyledComponents.StyledNavLink> */}
+    </StyledComponents.StyledBox>
   );
 };
 
