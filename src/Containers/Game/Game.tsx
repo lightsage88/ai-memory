@@ -8,7 +8,7 @@ import Matchingtable from "../Matchingtable";
 import mockAPIResponse from "../../Mock/api-data/art-cards.json";
 
 export const Game = () => {
-  const useMockData = process.env.REACT_APP_USE_DEV_MODE;
+  const useMockData = process.env.REACT_APP_DEV_MODE;
   const [cardArtObjects, setCardArtObjects] = useState<any>(Array.of(8));
   const { addCard, shuffleDeck, gameComplete } = useDeckStore();
   const { showLoader, hideLoader } = useLoaderStore();
