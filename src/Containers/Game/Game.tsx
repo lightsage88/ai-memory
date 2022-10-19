@@ -13,9 +13,12 @@ export const Game = () => {
   const { addCard, shuffleDeck, gameComplete } = useDeckStore();
   const { showLoader, hideLoader } = useLoaderStore();
   const { prompts } = usePromptStore();
-
-  const apiEndpoint = process.env.REACT_APP_DEV_MODE === 'false' ? 'https://ai-memory-api.onrender.com' : 'http://localhost:8080';
-  console.log('the apiEndpoint we are using right now: ', apiEndpoint);
+  console.log("GAME process.env", process.env);
+  const apiEndpoint =
+    process.env.REACT_APP_DEV_MODE === "false"
+      ? "https://ai-memory-api.onrender.com"
+      : "http://localhost:8080";
+  console.log("the apiEndpoint we are using right now: ", apiEndpoint);
   const makeAIPost = async (prompts: any) => {
     try {
       const response = await fetch(`${apiEndpoint}/api/ai-picture`, {
@@ -62,7 +65,7 @@ export const Game = () => {
     <>
       {prompts.length !== 8 && <Prompts />}
       {prompts.length === 8 && !gameComplete && <Cardtable />}
-      {gameComplete && <Matchingtable cardArtsObjects={cardArtObjects}/>}
+      {gameComplete && <Matchingtable cardArtsObjects={cardArtObjects} />}
     </>
   );
 };
