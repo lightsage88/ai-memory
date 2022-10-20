@@ -6,9 +6,10 @@ import useDeckStore from "../../Store/deckStore";
 import Cardtable from "../Cardtable";
 import Matchingtable from "../Matchingtable";
 import mockAPIResponse from "../../Mock/api-data/art-cards.json";
+import axios from "axios";
 
 export const Game = () => {
-  const useMockData = process.env.REACT_APP_DEV_MODE;
+  const useMockData = process.env.REACT_APP_USE_MOCK_DATA;
   const [cardArtObjects, setCardArtObjects] = useState<any>(Array.of(8));
   const { addCard, shuffleDeck, gameComplete } = useDeckStore();
   const { showLoader, hideLoader } = useLoaderStore();
@@ -19,21 +20,74 @@ export const Game = () => {
       ? "https://ai-memory-api.onrender.com"
       : "http://localhost:8080";
   console.log("the apiEndpoint we are using right now: ", apiEndpoint);
+  // const makeAIPost = async (prompts: any) => {
+  //   try {
+  //     const response = await fetch(`${apiEndpoint}/api/ai-picture`, {
+  //       method: "POST",
+  //       headers: {
+  //         Accept: "application/json, text/plain, */*",
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ prompts }),
+  //     });
+  //     const data = await response.json();
+  //     return data;
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // };
+
+  //   const [resp1, setResp1] = useState();
+  // const [resp2, setResp2] = useState();
+
+  // useEffect(() => {
+  //     Promise.all([
+  //         fetch('/api/...'),
+  //         fetch('/api/...')
+  //     ]).then(links => {
+  //         const response1 = links[0];
+  //         const response2 = links[1];
+
+  //         setResp1(response1);
+  //         setResp2(response2);
+  //     })
+  // }, [/*dependency array*/])
+
   const makeAIPost = async (prompts: any) => {
-    try {
-      const response = await fetch(`${apiEndpoint}/api/ai-picture`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompts }),
+    console.log("makeAIPost running with these prompts:", prompts);
+    const promptTextArray = prompts.map((el: any) => el.prompt);
+
+    const promisedResult = await Promise.all(
+      promptTextArray.map((el: any) => {
+        return axios.post(`${apiEndpoint}/api/ai-picture-single`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: { prompt: el },
+        });
+        // return fetch(`${apiEndpoint}/api/ai-picture-single`, {
+        //   method: "POST",
+        //   headers: {
+        //     Accept: "application/json, text/plain, */*",
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({ prompt: el }),
+        // });
+      })
+    )
+      .then((response: any) => {
+        console.log("first thing", response);
+        const firstPass = response.map((el) => el.json());
+        return firstPass;
+      })
+      .then((res: any) => {
+        console.log("res", res);
+      })
+      .catch((err) => {
+        console.error(err);
       });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return error;
-    }
   };
 
   const generateArtCards = async () => {
@@ -42,12 +96,15 @@ export const Game = () => {
     );
     let response =
       useMockData === "true" ? mockAPIResponse.data : await makeAIPost(prompts);
-    setCardArtObjects(response);
-    Array.from(response).forEach((el: any) => {
-      addCard(el);
-      addCard(el);
-    });
-    shuffleDeck();
+    if (response) {
+      setCardArtObjects(response);
+
+      Array.from(response).forEach((el: any) => {
+        addCard(el);
+        addCard(el);
+      });
+      shuffleDeck();
+    }
   };
   useEffect(() => {
     if (prompts.length === 8) {
