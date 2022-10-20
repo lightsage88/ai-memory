@@ -54,7 +54,7 @@ export const Matchingtable = (cardArtsObjects: any) => {
   `;
   return (
     <div data-testid="matching-table-div">
-      {matchCount < 8 && (
+      {matchCount < 4 && (
         <>
           <h3>You did well to match the pairs of cards!</h3>
           <h5>Now can you drag the prompts to the correct picture?</h5>
@@ -64,7 +64,7 @@ export const Matchingtable = (cardArtsObjects: any) => {
           </DndContext>
         </>
       )}
-      {matchCount >= 8 && (
+      {matchCount >= 4 && (
         <>
           <h1>Thanks for playing!</h1>
         </>

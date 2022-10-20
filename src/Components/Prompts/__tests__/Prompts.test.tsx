@@ -24,7 +24,7 @@ describe("The Prompts", () => {
     expect(inputCollection).toBeInTheDocument();
     const gameDirections = screen.getByTestId("game-setup-directions");
     expect(gameDirections.textContent).toBe(
-      "Enter 8 descriptions for the AI to make pictures from."
+      "Enter 4 descriptions for the AI to make pictures from."
     );
     expect(letsRockButton).toBeDisabled();
     const promptInputZeroWrapper = screen.getByTestId("prompt-input-0");

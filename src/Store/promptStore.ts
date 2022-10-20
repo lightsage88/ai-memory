@@ -4,7 +4,7 @@ import { devtools, persist } from "zustand/middleware";
 
 //set is used simply to change the state of any variable
 const promptStore = (set: any) => ({
-  prompts: Array.of(8),
+  prompts: Array.of(4),
   //actions - manipulators
   addPrompt: (prompt: any) => {
     set((state: any) => ({
@@ -18,7 +18,7 @@ const promptStore = (set: any) => ({
   },
   clearPromptArray: () => {
     set((state: any) => ({
-      prompts: Array.of(8)
+      prompts: Array.of(4)
     }))
   },
   removePrompt: (promptId: string | number) => {

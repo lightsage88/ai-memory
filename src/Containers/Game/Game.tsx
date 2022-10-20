@@ -49,7 +49,7 @@ export const Game = () => {
 
   const generateArtCards = async () => {
     showLoader(
-      "This may take about 2 minutes. Go get a snack...you can't rush art, even when a computer is at the wheel."
+      "This may take about 3-4 minutes. Go get a snack...you can't rush art, even when a computer is at the wheel."
     );
     let response =
       useMockData === "true" ? mockAPIResponse.data : await makeAIPost(prompts);
@@ -64,7 +64,7 @@ export const Game = () => {
     }
   };
   useEffect(() => {
-    if (prompts.length === 8) {
+    if (prompts.length === 4) {
       generateArtCards();
     }
   }, [prompts]);
@@ -75,8 +75,8 @@ export const Game = () => {
   }, [cardArtObjects]);
   return (
     <>
-      {prompts.length !== 8 && <Prompts />}
-      {prompts.length === 8 && !gameComplete && <Cardtable />}
+      {prompts.length !== 4 && <Prompts />}
+      {prompts.length === 4 && !gameComplete && <Cardtable />}
       {gameComplete && <Matchingtable cardArtsObjects={cardArtObjects} />}
     </>
   );

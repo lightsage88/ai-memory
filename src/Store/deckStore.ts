@@ -65,7 +65,7 @@ const deckStore = (set: any) => ({
   },
   checkIfMemoryIsComplete: () => {
     set((state: any) => ({
-      gameComplete: state.cardDeck.filter((el: any) => el.solved).length === 16
+      gameComplete: state.cardDeck.filter((el: any) => el.solved).length === 8
     }))
   },
   setGameCompleteToFalse: () => {
