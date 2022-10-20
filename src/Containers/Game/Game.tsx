@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import pLimit from "p-limit";
 import Prompts from "../../Components/Prompts";
 import usePromptStore from "../../Store/promptStore";
 import useLoaderStore from "../../Store/loaderStore";
@@ -9,6 +10,7 @@ import mockAPIResponse from "../../Mock/api-data/art-cards.json";
 import axios from "axios";
 
 export const Game = () => {
+  const limit = pLimit(2);
   const useMockData = process.env.REACT_APP_USE_MOCK_DATA;
   const [cardArtObjects, setCardArtObjects] = useState<any>(Array.of(8));
   const { addCard, shuffleDeck, gameComplete } = useDeckStore();
@@ -24,14 +26,14 @@ export const Game = () => {
 
     const promisedResult = await Promise.all(
       promptTextArray.map((el: any) => {
-        return axios.post(`${apiEndpoint}/api/ai-picture-single`, {
+        return limit(() => axios.post(`${apiEndpoint}/api/ai-picture-single`, {
           method: "POST",
           headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
           body: { prompt: el },
-        });
+        }));
       })
     )
       .then((response: any) => {
