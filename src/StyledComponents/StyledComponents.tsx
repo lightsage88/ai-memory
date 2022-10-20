@@ -34,8 +34,9 @@ const StyledBox = styled(Box)`
     background: pink;
     text-decoration: none;
     padding: 1vw 2vw;
+    transition: all 2s ease, transform 1s ease;
     &:hover {
-      transition: all 2s;
+      transform: scale(1.2);
       background: gold;
       border-color: hotpink;
       color: red;
