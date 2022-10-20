@@ -14,47 +14,12 @@ export const Game = () => {
   const { addCard, shuffleDeck, gameComplete } = useDeckStore();
   const { showLoader, hideLoader } = useLoaderStore();
   const { prompts } = usePromptStore();
-  console.log("GAME process.env", process.env);
   const apiEndpoint =
     process.env.REACT_APP_DEV_MODE === "false"
       ? "https://ai-memory-api.onrender.com"
       : "http://localhost:8080";
-  console.log("the apiEndpoint we are using right now: ", apiEndpoint);
-  // const makeAIPost = async (prompts: any) => {
-  //   try {
-  //     const response = await fetch(`${apiEndpoint}/api/ai-picture`, {
-  //       method: "POST",
-  //       headers: {
-  //         Accept: "application/json, text/plain, */*",
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ prompts }),
-  //     });
-  //     const data = await response.json();
-  //     return data;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // };
-
-  //   const [resp1, setResp1] = useState();
-  // const [resp2, setResp2] = useState();
-
-  // useEffect(() => {
-  //     Promise.all([
-  //         fetch('/api/...'),
-  //         fetch('/api/...')
-  //     ]).then(links => {
-  //         const response1 = links[0];
-  //         const response2 = links[1];
-
-  //         setResp1(response1);
-  //         setResp2(response2);
-  //     })
-  // }, [/*dependency array*/])
 
   const makeAIPost = async (prompts: any) => {
-    console.log("makeAIPost running with these prompts:", prompts);
     const promptTextArray = prompts.map((el: any) => el.prompt);
 
     const promisedResult = await Promise.all(
@@ -67,11 +32,9 @@ export const Game = () => {
           },
           body: { prompt: el },
         });
-       
       })
     )
       .then((response: any) => {
-        console.log("first thing", response);
         return response.map((el: any, index: number) => {
           return {...el.data, id: index}
         })
@@ -79,17 +42,15 @@ export const Game = () => {
       .catch((err) => {
         console.error(err);
       });
-      console.log('promisedResult', promisedResult);
       return promisedResult;
   };
 
   const generateArtCards = async () => {
     showLoader(
-      "This will take 5 to 8 minutes at least, go get a snack...you can't rush art, even when a computer is at the wheel."
+      "This may take about 2 minutes. Go get a snack...you can't rush art, even when a computer is at the wheel."
     );
     let response =
       useMockData === "true" ? mockAPIResponse.data : await makeAIPost(prompts);
-      console.log('response is: ', response);
     if (response) {
       setCardArtObjects(response);
 
@@ -107,9 +68,7 @@ export const Game = () => {
   }, [prompts]);
   useEffect(() => {
     if (cardArtObjects.length !== 0) {
-      // setTimeout(() => {
       hideLoader();
-      // }, 5000);
     }
   }, [cardArtObjects]);
   return (

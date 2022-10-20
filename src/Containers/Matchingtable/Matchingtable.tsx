@@ -11,9 +11,6 @@ export const Matchingtable = (cardArtsObjects: any) => {
   const [imageSources, setImageSources] = useState(
     cardArtsObjects.cardArtsObjects
   );
-  console.log("cardArtsObjects", cardArtsObjects);
-  console.log("imageSources", imageSources);
-
   const draggableTextInstance = <DraggableText>drag me</DraggableText>;
   let draggableTextInstances = imageSources
     .sort(() => Math.random() - 0.5)
@@ -25,14 +22,10 @@ export const Matchingtable = (cardArtsObjects: any) => {
       );
     });
 
-  console.log("draggableTextInstances", draggableTextInstances);
 
   const handleDragEnd = (event: any) => {
-    console.log("solbocho", event);
     if (event.over && event.over.id === event.active.id) {
-      console.log("we have a match!");
       setMatchCount(matchCount + 1);
-      //   setIsDropped(true);
       setImageSources(
         imageSources.filter((el: any) => el.prompt !== event.over.id)
       );

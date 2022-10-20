@@ -2,7 +2,6 @@ import React from 'react';
 import { useDroppable } from '@dnd-kit/core';
 
 export const DroppableImage = (props: any) => {
-    console.log('droppable image props: ', props);
     const trueProps = props.children.props['data-imageSourceData'];
     const { isOver, setNodeRef } = useDroppable({
         id: trueProps.prompt

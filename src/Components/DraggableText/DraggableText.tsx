@@ -2,7 +2,6 @@ import React from "react";
 import { useDraggable } from "@dnd-kit/core";
 
 export const DraggableText = (props: any) => {
-    console.log('draggableText instance props', props);
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: props.imageSourceData.prompt,
   });
