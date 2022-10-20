@@ -1,7 +1,33 @@
 import { ReactElement, useState } from "react";
+import styled from "styled-components";
 import StyledComponents from "../../StyledComponents/StyledComponents";
 import { Button, TextField } from "@mui/material";
 import usePromptStore from "../../Store/promptStore";
+import { Link } from "react-router-dom";
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  float: right;
+  button {
+    float: right;
+    color: white;
+    background: hotpink;
+    &:hover {
+      background: pink;
+    }
+    &:active {
+      background: red;
+    }
+  }
+`;
+
+const StyledH3 = styled.h3`
+  font-family: Kirby;
+`;
+
+const StyledStrong = styled.strong`
+  font-family: 'Crono';
+`;
 
 export const Prompts = () => {
   const addPromptArray = usePromptStore((state) => state.addPromptArray);
@@ -26,7 +52,7 @@ export const Prompts = () => {
     const inputs = document.getElementsByTagName("input");
     for (let i = 0; i < inputs.length; i++) {
       let el = inputs[i];
-      el.value = '';
+      el.value = "";
     }
   };
 
@@ -69,11 +95,14 @@ export const Prompts = () => {
       open={true}
       data-testid="prompts-container"
     >
-      <h3 data-testid="game-setup-directions">
+      <StyledLink to="/">
+        <Button variant="outlined">X</Button>
+      </StyledLink>
+      <StyledH3 data-testid="game-setup-directions">
         Enter 8 descriptions for the AI to make pictures from.
-      </h3>
+      </StyledH3>
       <p>
-        <strong>Example: </strong>Starfox helping Ukraine fight Putin
+        <StyledStrong>Example: </StyledStrong>Starfox helping Ukraine fight Putin
       </p>
       {textFields()}
       <Button

@@ -5,7 +5,7 @@ import useDeckStore from "../../Store/deckStore";
 import usePromptStore from "../../Store/promptStore";
 
 export const Navigation = () => {
-  const { clearDeck } = useDeckStore();
+  const { clearDeck, setGameCompleteToFalse } = useDeckStore();
   const { clearPromptArray } = usePromptStore();
 
   /**
@@ -13,6 +13,7 @@ export const Navigation = () => {
    * and clears the prompts in the prompt store.
    */
   const resetGamePrompts = () => {
+    setGameCompleteToFalse();
     clearDeck();
     clearPromptArray();
   };

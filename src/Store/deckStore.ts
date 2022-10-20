@@ -68,6 +68,11 @@ const deckStore = (set: any) => ({
       gameComplete: state.cardDeck.filter((el: any) => el.solved).length === 16
     }))
   },
+  setGameCompleteToFalse: () => {
+    set((state: any) => ({
+      gameComplete: false
+    }))
+  },
   shuffleDeck: () => {
     set((state: any) => ({
       cardDeck: state.cardDeck
