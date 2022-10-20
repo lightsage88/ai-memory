@@ -67,27 +67,20 @@ export const Game = () => {
           },
           body: { prompt: el },
         });
-        // return fetch(`${apiEndpoint}/api/ai-picture-single`, {
-        //   method: "POST",
-        //   headers: {
-        //     Accept: "application/json, text/plain, */*",
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({ prompt: el }),
-        // });
+       
       })
     )
       .then((response: any) => {
         console.log("first thing", response);
-        const firstPass = response.map((el) => el.json());
-        return firstPass;
-      })
-      .then((res: any) => {
-        console.log("res", res);
+        return response.map((el: any, index: number) => {
+          return {...el.data, id: index}
+        })
       })
       .catch((err) => {
         console.error(err);
       });
+      console.log('promisedResult', promisedResult);
+      return promisedResult;
   };
 
   const generateArtCards = async () => {
@@ -96,6 +89,7 @@ export const Game = () => {
     );
     let response =
       useMockData === "true" ? mockAPIResponse.data : await makeAIPost(prompts);
+      console.log('response is: ', response);
     if (response) {
       setCardArtObjects(response);
 
