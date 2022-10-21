@@ -66,14 +66,18 @@ const StyledCancelButton = styled(Button)`
   justify-content: center;
   align-items: center;
   a {
-    color: #272727;
+    color: red;
     font-family: Kirby;
     font-size: 1.5rem;
     border: solid 5px #272727;
     padding: 40px 80px;
     position: relative;
     z-index: 1;
+    transition: all 1s;
     overflow: hidden;
+    &:hover {
+      color: white;
+    }
     &:before {
       content: '';
       position: absolute;
@@ -82,13 +86,11 @@ const StyledCancelButton = styled(Button)`
       background-color: red;
       height: 100%;
       width: 100%;
-      transform: rotate(-90deg);
-      transform-origin: bottom right;
-      transition: transform 1s;
-      z-index: -1;
+      transform: translateX(-100%);
+      transition: all 1s;
     }
     &:hover:before {
-      transform: rotate(0deg);
+      transform: translateX(0);
       z-index: -1;
     }
   }
