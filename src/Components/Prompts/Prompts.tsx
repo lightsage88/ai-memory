@@ -21,12 +21,85 @@ const StyledLink = styled(Link)`
   }
 `;
 
+interface IStyledRockButton {
+  isDisabled: boolean;
+}
+
+const StyledRockButton = styled(Button)<IStyledRockButton>`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a {
+    background-color: ${(props) => props.isDisabled ? 'grey': 'white' }
+    color: #272727;
+    font-family: Kirby;
+    font-size: 1.5rem;
+    border: solid 5px #272727;
+    padding: 40px 80px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: #007aaf;
+      height: 100%;
+      width: 100%;
+      transform: rotate(-90deg);
+      transform-origin: bottom left;
+      transition: transform 1s;
+      z-index: -1;
+    }
+    &:hover:before {
+      transform: rotate(0deg);
+      z-index: -1;
+    }
+  }
+`;
+
+const StyledCancelButton = styled(Button)`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a {
+    color: #272727;
+    font-family: Kirby;
+    font-size: 1.5rem;
+    border: solid 5px #272727;
+    padding: 40px 80px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: red;
+      height: 100%;
+      width: 100%;
+      transform: rotate(-90deg);
+      transform-origin: bottom right;
+      transition: transform 1s;
+      z-index: -1;
+    }
+    &:hover:before {
+      transform: rotate(0deg);
+      z-index: -1;
+    }
+  }
+`;
+
 const StyledH3 = styled.h3`
   font-family: Kirby;
 `;
 
 const StyledStrong = styled.strong`
-  font-family: 'Crono';
+  font-family: "Crono";
 `;
 
 export const Prompts = () => {
@@ -102,19 +175,21 @@ export const Prompts = () => {
         Enter 4 descriptions for the AI to make pictures from.
       </StyledH3>
       <p>
-        <StyledStrong>Example: </StyledStrong>Starfox helping Ukraine fight Putin
+        <StyledStrong>Example: </StyledStrong>Starfox helping Ukraine fight
+        Putin
       </p>
       {textFields()}
-      <Button
+      <StyledRockButton
         disabled={determineContinueButtonDisability()}
+        isDisabled={determineContinueButtonDisability()}
         onClick={() => setComponentPromptsInState()}
         data-testid="lets-rock-button"
       >
-        Let's Rock!
-      </Button>
-      <Button data-testid="clear-button" onClick={() => resetPrompts()}>
-        Clear
-      </Button>
+        <a> Let's Rock!</a>
+      </StyledRockButton>
+      <StyledCancelButton data-testid="clear-button" onClick={() => resetPrompts()}>
+        <a>Clear</a>
+      </StyledCancelButton>
     </StyledComponents.StyledPromptsDialog>
   );
 };
