@@ -16,38 +16,55 @@ interface cardWrapperDivProps {
 const StyledMaterialUICard = styled(MatCard)`
   width: fit-content;
   height: inherit;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
 `;
 
 const StyledCardWrapperDiv = styled.div<cardWrapperDivProps>`
-  @keyframes cardFlip {
-    0% {transform: rotate3d(1, 1, 1, 0deg);}
-    50% { transform: rotate3d(1, 1, 1, 180deg);}
-    100% {transform: rotate3d(1, 1, 1, 0deg);}
+  @keyframes cardShake {
+    0% {
+      transform: rotate(5deg);
+    }
+
+    50% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(-5deg);
+    }
   }
   box-sizing: border-box;
   width: fit-content;
   height: 20vw;
   min-width: 20vw;
   transition: box-shadow 1s;
-  box-shadow: ${(props) => props.boxShadowStyle}
-  
+  box-shadow: ${(props) => props.boxShadowStyle};
+  &:hover {
+    animation-name: cardShake;
+    animation-iteration-count: infinite;
+    animation-direction: forward;
+  }
 `;
 
 const StyledImageTag = styled.img<imgProps>`
-
+  @keyframes cardFlip {
+    0% {
+      transform: rotate3d(1, 1, 1, 0deg);
+    }
+    50% {
+      transform: rotate3d(1, 1, 1, 180deg);
+    }
+    100% {
+      transform: rotate3d(1, 1, 1, 0deg);
+    }
+  }
   width: 20vw;
   height: 20vw;
   transition: all 1s;
-  opacity: ${(props) => props.opacityAmount}; 
+  opacity: ${(props) => props.opacityAmount};
   &:active {
-    @keyframes cardFlip {
-      0% {transform: rotate3d(1, 1, 1, 0deg);}
-      50% { transform: rotate3d(1, 1, 1, 180deg);}
-      100% {transform: rotate3d(1, 1, 1, 0deg);}
-    }
     animation-name: cardFlip;
-    animation-duration: .5s;
+    animation-duration: 0.5s;
   }
 `;
 

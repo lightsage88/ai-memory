@@ -5,13 +5,16 @@ import styled from "styled-components";
 
 const StyledCardTable = styled.div`
   display: grid;
-  grid-template-columns: max-content max-content max-content max-content;
+  grid-template-columns: max-content max-content max-content;
   border: solid;
   grid-gap: 1rem;
   width: fit-content;
   margin: auto;
   background-color: #663d00;
   background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+  padding: 2rem;
+  margin-top: 2vh;
+  perspective: 1000px;
 `;
 
 export const Cardtable: FC = () => {
@@ -31,7 +34,8 @@ export const Cardtable: FC = () => {
     });
   };
   memoryCards();
-  return <StyledCardTable>{memoryCards()}</StyledCardTable>;
+  const componentJSX = cardDeck.length !== 0 ?  <StyledCardTable>{memoryCards()}</StyledCardTable> : null;
+  return componentJSX;
 };
 
 export default Cardtable;

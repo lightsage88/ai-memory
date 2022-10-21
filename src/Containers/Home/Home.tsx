@@ -1,7 +1,21 @@
 import styled from "styled-components";
 
 const StyledH1 = styled.h1`
+  @keyframes introRotate {
+    0% {
+      transform: rotateX(90deg);
+      transform: rotateY(90deg);
+    }
+    100% {
+      transform: rotateX(359deg);
+      transform: rotateY(359deg);
+    }
+  }
   font-family: Kirby;
+  text-align: center;
+  animation-name: introRotate;
+  animation-duration: 2s;
+
 `;
 
 export const Home = () => {
