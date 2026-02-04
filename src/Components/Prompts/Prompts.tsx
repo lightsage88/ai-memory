@@ -36,7 +36,7 @@ export const Prompts = () => {
    */
   const textFields = () => {
     let jsxToReturn = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 4; i++) {
       const randomId = Math.ceil(Math.random() * 100000);
       jsxToReturn.push(
         <TextField
@@ -53,7 +53,7 @@ export const Prompts = () => {
 
   const determineContinueButtonDisability = () => {
     if (
-      prompts.length === 8 &&
+      prompts.length === 4 &&
       prompts.filter((el) => el.prompt === "").length === 0
     ) {
       return false;
@@ -70,7 +70,7 @@ export const Prompts = () => {
       data-testid="prompts-container"
     >
       <h3 data-testid="game-setup-directions">
-        Enter 8 descriptions for the AI to make pictures from.
+        Enter 4 descriptions for the AI to make pictures from.
       </h3>
       <p>
         <strong>Example: </strong>Starfox helping Ukraine fight Putin

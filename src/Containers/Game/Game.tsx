@@ -9,7 +9,7 @@ import mockAPIResponse from "../../Mock/api-data/art-cards.json";
 
 export const Game = () => {
   const useMockData = process.env.REACT_APP_USE_MOCK_DATA;
-  const [cardArtObjects, setCardArtObjects] = useState<any>(Array.of(8));
+  const [cardArtObjects, setCardArtObjects] = useState<any>(Array.of(4));
   const showLoader = useLoaderStore((state) => state.showLoader);
   const hideLoader = useLoaderStore((state) => state.hideLoader);
   const addCard = useDeckStore((state) => state.addCard);
@@ -19,7 +19,18 @@ export const Game = () => {
 
   const makeAIPost = async (prompts: any) => {
     try {
-      const response = await fetch("/api/ai-picture", {
+      const envBase = process.env.REACT_APP_API_URL || "";
+      let base = envBase;
+      if (!base && process.env.NODE_ENV === "development") {
+        base = "http://localhost:8080";
+      }
+      if (base && !base.match(/^https?:\/\//)) {
+        base = `http://${base}`;
+      }
+      if (base) base = base.replace(/\/$/, "");
+      const url = base ? `${base}/api/ai-picture` : "/api/ai-picture";
+
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           Accept: "application/json, text/plain, */*",
@@ -49,21 +60,19 @@ export const Game = () => {
     shuffleDeck();
   };
   useEffect(() => {
-    if (prompts.length === 8) {
+    if (prompts.length === 4) {
       generateArtCards();
     }
   }, [prompts]);
   useEffect(() => {
     if (cardArtObjects.length !== 0) {
-      // setTimeout(() => {
       hideLoader();
-      // }, 5000);
     }
   }, [cardArtObjects]);
   return (
     <>
-      {prompts.length !== 8 && <Prompts />}
-      {prompts.length === 8 && !memoryComplete && <Cardtable />}
+      {prompts.length !== 4 && <Prompts />}
+      {prompts.length === 4 && !memoryComplete && <Cardtable />}
       {memoryComplete && <Matchingtable />}
     </>
   );
