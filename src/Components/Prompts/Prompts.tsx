@@ -170,12 +170,9 @@ export const Prompts = () => {
       open={true}
       data-testid="prompts-container"
     >
-      <StyledLink to="/">
-        <Button variant="outlined">X</Button>
-      </StyledLink>
-      <StyledH3 data-testid="game-setup-directions">
+      <h3 data-testid="game-setup-directions">
         Enter 4 descriptions for the AI to make pictures from.
-      </StyledH3>
+      </h3>
       <p>
         <StyledStrong>Example: </StyledStrong>Starfox helping Ukraine fight
         Putin

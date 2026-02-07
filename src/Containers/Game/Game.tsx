@@ -12,37 +12,34 @@ import axios from "axios";
 export const Game = () => {
   const limit = pLimit(2);
   const useMockData = process.env.REACT_APP_USE_MOCK_DATA;
-  const [cardArtObjects, setCardArtObjects] = useState<any>(Array.of(8));
-  const { addCard, shuffleDeck, gameComplete } = useDeckStore();
-  const { showLoader, hideLoader } = useLoaderStore();
-  const { prompts } = usePromptStore();
-  const apiEndpoint =
-    process.env.REACT_APP_DEV_MODE === "false"
-      ? "https://ai-memory-api.onrender.com"
-      : "http://localhost:8080";
+  const [cardArtObjects, setCardArtObjects] = useState<any>(Array.of(4));
+  const showLoader = useLoaderStore((state) => state.showLoader);
+  const hideLoader = useLoaderStore((state) => state.hideLoader);
+  const addCard = useDeckStore((state) => state.addCard);
+  const shuffleDeck = useDeckStore((state) => state.shuffleDeck);
+  const memoryComplete = useDeckStore((state) => state.gameComplete);
+  const prompts = usePromptStore((state) => state.prompts);
 
   const makeAIPost = async (prompts: any) => {
-    const promptTextArray = prompts.map((el: any) => el.prompt);
+    try {
+      const envBase = process.env.REACT_APP_API_URL || "";
+      let base = envBase;
+      if (!base && process.env.NODE_ENV === "development") {
+        base = "http://localhost:8080";
+      }
+      if (base && !base.match(/^https?:\/\//)) {
+        base = `http://${base}`;
+      }
+      if (base) base = base.replace(/\/$/, "");
+      const url = base ? `${base}/api/ai-picture` : "/api/ai-picture";
 
-    const promisedResult = await Promise.all(
-      promptTextArray.map((el: any) => {
-        return limit(() => axios.post(`${apiEndpoint}/api/ai-picture-single`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-          },
-          body: { prompt: el },
-        }));
-      })
-    )
-      .then((response: any) => {
-        return response.map((el: any, index: number) => {
-          return {...el.data, id: index}
-        })
-      })
-      .catch((err) => {
-        console.error(err);
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompts }),
       });
       return promisedResult;
   };
@@ -76,8 +73,8 @@ export const Game = () => {
   return (
     <>
       {prompts.length !== 4 && <Prompts />}
-      {prompts.length === 4 && !gameComplete && <Cardtable />}
-      {gameComplete && <Matchingtable cardArtsObjects={cardArtObjects} />}
+      {prompts.length === 4 && !memoryComplete && <Cardtable />}
+      {memoryComplete && <Matchingtable />}
     </>
   );
 };
