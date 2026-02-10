@@ -16,14 +16,15 @@ export const Cardtable: FC = () => {
   const cardDeck = useDeckStore((state) => state.cardDeck);
   const memoryCards = () => {
     return cardDeck.map((el, index) => {
+      const { dataId, image_url, promptText, shown, solved } = el;
       return (
         <Card
-          cardPromptText={el["prompt"]}
-          artBase64String={el["artBase64"]}
+          cardPromptText={promptText}
+          imageUrl={image_url}
           key={index}
-          dataCardIndex={el['dataId']}
-          shown={el['shown']}
-          solved={el['solved']}
+          dataCardIndex={dataId}
+          shown={shown}
+          solved={solved}
         />
       );
     });

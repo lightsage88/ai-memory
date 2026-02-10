@@ -50,7 +50,7 @@ describe("The App", () => {
     //   name: /enter 8 descriptions for the ai to make pictures from\./i,
     // });
     const gameInstructions = screen.getByText(
-      /enter 8 descriptions for the ai to make pictures from\./i
+      /enter 4 descriptions for the ai to make pictures from\./i
     );
     expect(gameInstructions).toBeInTheDocument();
   });
@@ -63,17 +63,13 @@ describe("The App", () => {
     expect(inputCollection).toBeInTheDocument();
     const gameDirections = screen.getByTestId("game-setup-directions");
     expect(gameDirections.textContent).toBe(
-      "Enter 8 descriptions for the AI to make pictures from."
+      "Enter 4 descriptions for the AI to make pictures from."
     );
     expect(letsRockButton).toBeDisabled();
     const promptInputZeroWrapper = screen.getByTestId("prompt-input-0");
     const promptInputOneWrapper = screen.getByTestId("prompt-input-1");
     const promptInputTwoWrapper = screen.getByTestId("prompt-input-2");
     const promptInputThreeWrapper = screen.getByTestId("prompt-input-3");
-    const promptInputFourWrapper = screen.getByTestId("prompt-input-4");
-    const promptInputFiveWrapper = screen.getByTestId("prompt-input-5");
-    const promptInputSixWrapper = screen.getByTestId("prompt-input-6");
-    const promptInputSevenWrapper = screen.getByTestId("prompt-input-7");
     //Prompt Zero
     const promptInputZero = within(promptInputZeroWrapper).getByRole(
       "textbox"
@@ -100,32 +96,6 @@ describe("The App", () => {
       target: { value: "Ganondorf" },
     });
     expect(promptInputThree.value).toBe("Ganondorf");
-    //Prompt Four
-    const promptInputFour = within(promptInputFourWrapper).getByRole(
-      "textbox"
-    ) as HTMLInputElement;
-    fireEvent.change(promptInputFour, { target: { value: "Opera" } });
-    expect(promptInputFour.value).toBe("Opera");
-    //Prompt Five
-    const promptInputFive = within(promptInputFiveWrapper).getByRole(
-      "textbox"
-    ) as HTMLInputElement;
-    fireEvent.change(promptInputFive, { target: { value: "Cats on Cheese" } });
-    expect(promptInputFive.value).toBe("Cats on Cheese");
-    //Prompt Six
-    const promptInputSix = within(promptInputSixWrapper).getByRole(
-      "textbox"
-    ) as HTMLInputElement;
-    fireEvent.change(promptInputSix, { target: { value: "Mexico" } });
-    expect(promptInputSix.value).toBe("Mexico");
-    //Prompt Seven
-    const promptInputSeven = within(promptInputSevenWrapper).getByRole(
-      "textbox"
-    ) as HTMLInputElement;
-    fireEvent.change(promptInputSeven, {
-      target: { value: "China" },
-    });
-    expect(promptInputSeven.value).toBe("China");
     //Lets Rock Button is Enabled
     expect(letsRockButton).not.toBeDisabled();
     //Click the Lets Rock Button

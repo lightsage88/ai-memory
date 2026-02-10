@@ -47,8 +47,8 @@ const deckStore = (set: any) => ({
           if (
             !el.solved &&
             el.shown && 
-            twoShownUnsolvedInDeck[0].prompt ===
-              twoShownUnsolvedInDeck[1].prompt
+            twoShownUnsolvedInDeck[0].promptText ===
+              twoShownUnsolvedInDeck[1].promptText
           ) {
             return { ...el, shown: true, solved: true };
           } else if (!el.solved) {

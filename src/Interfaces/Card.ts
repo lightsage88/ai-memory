@@ -1,5 +1,6 @@
 export interface ICard {
-    artBase64String: string;
+    imageUrl?: string;
+    image?: string;
     key: number;
     dataCardIndex: number;
     cardPromptText: string;

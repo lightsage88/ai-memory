@@ -36,21 +36,22 @@ export const Card: FC<ICard> = (cardData) => {
   const checkIfMemoryIsComplete = useDeckStore(
     (state) => state.checkIfMemoryIsComplete
   );
-  const { artBase64String, cardPromptText, shown, solved, dataCardIndex } =
+  const { imageUrl, image, cardPromptText, shown, solved, dataCardIndex } =
     cardData;
-  const cardImage = `data:image/jpeg;base64, ${artBase64String}`;
+  // Use image URL if available, otherwise use base64
+  const cardImage = imageUrl;
   const cardPattern = StartPattern;
   const imageToShow = shown ? cardImage : cardPattern;
   const toggleCard = () => {
     if (!shown) {
       showCardViaDataCardIndex(cardData.dataCardIndex);
-      // setTimeout(() => {
+      setTimeout(() => {
         hideUnsolvedCardsMatches();
         checkIfMemoryIsComplete();
-      // }, 900);
+      }, 900);
     }
   };
-  const imgTag = artBase64String ? (
+  const imgTag = cardImage ? (
     <StyledImageTag className="card-image-tag" src={imageToShow} data-testid={shown ? `${cardPromptText.toLowerCase()}-image` : 'cardback-image'}/>
   ) : null;
   return (

@@ -49,11 +49,12 @@ export const Game = () => {
     showLoader(
       "This will take 5 to 8 minutes at least, go get a snack...you can't rush art, even when a computer is at the wheel."
     );
-    let response =
-      useMockData === "true" ? mockAPIResponse.data : await makeAIPost(prompts);
-    console.log("lets see the response", response);
-    setCardArtObjects(response);
-    Array.from(response).forEach((el: any) => {
+    let response = useMockData === "true" ? mockAPIResponse : await makeAIPost(prompts);
+  
+    // Transform data to card objects 
+    const { imageData} = response;
+    setCardArtObjects(imageData);
+    imageData.forEach((el: any) => {
       addCard(el);
       addCard(el);
     });

@@ -1,12 +1,14 @@
-import { ReactElement, useState } from "react";
+import { useState } from "react";
 import StyledComponents from "../../StyledComponents/StyledComponents";
 import { Button, TextField } from "@mui/material";
 import usePromptStore from "../../Store/promptStore";
 
 export const Prompts = () => {
   const addPromptArray = usePromptStore((state) => state.addPromptArray);
-  const zustandPrompts = usePromptStore((state) => state.prompts);
-  const [prompts, setPrompts] = useState<any[]>([]);
+  const defaultPromptValues = ["Birds", "Dogs", "Cats", "Bees"];
+  const [prompts, setPrompts] = useState<any[]>(
+    defaultPromptValues.map((prompt, id) => ({ prompt, id }))
+  );
 
   /**
    * This method handles the change in a textfield and sets the prompts within the component's useState implementation
@@ -38,12 +40,15 @@ export const Prompts = () => {
     let jsxToReturn = [];
     for (let i = 0; i < 4; i++) {
       const randomId = Math.ceil(Math.random() * 100000);
+      const currentPrompt =
+        prompts.find((prompt) => prompt.id === i)?.prompt || "";
       jsxToReturn.push(
         <TextField
           data-testid={`prompt-input-${i}`}
           className="text-field-for-prompt"
           key={i}
           variant="outlined"
+          defaultValue={currentPrompt}
           onChange={(e: any) => handleTextFieldChange(e.target.value, i)}
         ></TextField>
       );
