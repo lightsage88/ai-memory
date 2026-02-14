@@ -6,18 +6,52 @@ import styled from "styled-components";
 import StartPattern from "../../Assets/Images/starPattern.jpeg";
 
 const StyledMaterialUICard = styled(MatCard)`
-  width: fit-content;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const StyledCardWrapperDiv = styled.div`
-  width: fit-content;
+  width: 256px;
   height: 256px;
   min-width: 256px;
 `;
 
-const StyledImageTag = styled.img`
+const StyledFlipCard = styled.div`
+  background-color: transparent;
   width: 256px;
   height: 256px;
+  perspective: 1000px;
+`;
+
+const StyledFlipCardInner = styled.div<{ $flipped: boolean }>`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transform: ${({ $flipped }) => ($flipped ? "rotateY(180deg)" : "none")};
+`;
+
+const StyledFlipCardFace = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+`;
+
+const StyledFlipCardBack = styled(StyledFlipCardFace)`
+  transform: rotateY(180deg);
+`;
+
+const StyledImageTag = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 
 const StyledHiddenStrongText = styled.strong`
@@ -41,7 +75,7 @@ export const Card: FC<ICard> = (cardData) => {
   // Use image URL if available, otherwise use base64
   const cardImage = imageUrl;
   const cardPattern = StartPattern;
-  const imageToShow = shown ? cardImage : cardPattern;
+  const isFlipped = shown || solved;
   const toggleCard = () => {
     if (!shown) {
       showCardViaDataCardIndex(cardData.dataCardIndex);
@@ -51,16 +85,40 @@ export const Card: FC<ICard> = (cardData) => {
       }, 900);
     }
   };
-  const imgTag = cardImage ? (
-    <StyledImageTag className="card-image-tag" src={imageToShow} data-testid={shown ? `${cardPromptText.toLowerCase()}-image` : 'cardback-image'}/>
+  const frontImgTag = cardPattern ? (
+    <StyledImageTag
+      className="card-image-tag"
+      src={cardPattern}
+      data-testid={!isFlipped ? "cardback-image" : undefined}
+    />
+  ) : null;
+  const backImgTag = cardImage ? (
+    <StyledImageTag
+      className="card-image-tag"
+      src={cardImage}
+      data-testid={isFlipped ? `${cardPromptText.toLowerCase()}-image` : undefined}
+    />
   ) : null;
   return (
     <>
       <StyledCardWrapperDiv onClick={toggleCard}>
-        <StyledMaterialUICard>
-          <StyledHiddenStrongText data-testid={cardPromptText.toLowerCase()}>{cardPromptText}</StyledHiddenStrongText>
-          {imgTag}
-        </StyledMaterialUICard>
+        <StyledFlipCard>
+          <StyledFlipCardInner $flipped={isFlipped}>
+            <StyledFlipCardFace>
+              <StyledMaterialUICard>
+                {frontImgTag}
+              </StyledMaterialUICard>
+            </StyledFlipCardFace>
+            <StyledFlipCardBack>
+              <StyledMaterialUICard>
+                <StyledHiddenStrongText data-testid={cardPromptText.toLowerCase()}>
+                  {cardPromptText}
+                </StyledHiddenStrongText>
+                {backImgTag}
+              </StyledMaterialUICard>
+            </StyledFlipCardBack>
+          </StyledFlipCardInner>
+        </StyledFlipCard>
       </StyledCardWrapperDiv>
     </>
   );
