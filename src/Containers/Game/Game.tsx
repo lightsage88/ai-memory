@@ -17,6 +17,8 @@ export const Game = () => {
   const memoryComplete = useDeckStore((state) => state.gameComplete);
   const prompts = usePromptStore((state) => state.prompts);
 
+  console.log('memoryComplete', memoryComplete);
+
   const makeAIPost = async (prompts: any) => {
     try {
       const envBase = process.env.REACT_APP_API_URL || "";
@@ -47,7 +49,7 @@ export const Game = () => {
 
   const generateArtCards = async () => {
     showLoader(
-      "This will take 5 to 8 minutes at least, go get a snack...you can't rush art, even when a computer is at the wheel."
+      "This may take a moment ...especially if you're making brand new images nobody tried before"
     );
     let response = useMockData === "true" ? mockAPIResponse : await makeAIPost(prompts);
   
