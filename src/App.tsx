@@ -21,8 +21,6 @@ export const App = () => {
             <Home />
           </Route>
         </Switch>
-        <Navigation />
-
       </Router>
     </>
   );
