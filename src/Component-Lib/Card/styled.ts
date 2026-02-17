@@ -10,15 +10,15 @@ export const StyledMaterialUICard = styled(Card)`
 `;
 
 export const StyledCardWrapperDiv = styled.div`
-  width: 256px;
-  height: 256px;
-  min-width: 256px;
+  width: 10em;
+  height: 10em;
+  min-width: 10m;
 `;
 
 export const StyledFlipCard = styled.div`
   background-color: transparent;
-  width: 256px;
-  height: 256px;
+  width: 10em;
+  height: 10em;
   perspective: 1000px;
 `;
 

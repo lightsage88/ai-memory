@@ -9,7 +9,9 @@ const StyledCardTable = styled.div`
   border: solid;
   grid-gap: 1rem;
   width: fit-content;
-  margin: auto;
+  margin: 0 auto;
+  justify-self: center;
+  place-self: center;
 `;
 
 export const Cardtable: FC = () => {
