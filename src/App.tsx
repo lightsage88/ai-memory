@@ -12,7 +12,7 @@ export const App = () => {
   return (
     <>
     {displayLoader && <Loader message={loaderMessage} />}
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
         <Switch>
           <Route path="/game">
             <Game />
