@@ -18,7 +18,7 @@ export const Game = () => {
   const prompts = usePromptStore((state) => state.prompts);
 
   console.log('memoryComplete', memoryComplete);
-
+  console.log('envs', process.env);
   const makeAIPost = async (prompts: any) => {
     try {
       const envBase = process.env.REACT_APP_API_URL || "";
@@ -27,7 +27,7 @@ export const Game = () => {
         base = "http://localhost:8080";
       }
       if (base && !base.match(/^https?:\/\//)) {
-        base = `http://${base}`;
+        base = `https://${base}`;
       }
       if (base) base = base.replace(/\/$/, "");
       const url = base ? `${base}/api/ai-picture` : "/api/ai-picture";
