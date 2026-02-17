@@ -17,8 +17,6 @@ export const Game = () => {
   const memoryComplete = useDeckStore((state) => state.gameComplete);
   const prompts = usePromptStore((state) => state.prompts);
 
-  console.log('memoryComplete', memoryComplete);
-  console.log('envs', process.env);
   const makeAIPost = async (prompts: any) => {
     try {
       const envBase = process.env.REACT_APP_API_URL || "";
