@@ -67,5 +67,6 @@
   "proxy": "http://localhost:8080",
   "jestWebpackResolver": {
     "webpackConfig": "./webpack.config.js"
-  }
+  },
+  "homepage": "https://ai-memory.onrender.com/"
 }

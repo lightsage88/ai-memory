@@ -6,7 +6,7 @@ export const Home = () => {
         <Styled.Container>
             <h1>Welcome to AI Memory!</h1>
             <strong>Test your memory with AI-Generated Images!</strong>
-            <Button variant="contained" href="/game">
+            <Button variant="contained" href={`${process.env.PUBLIC_URL}/game`}>
                 Play Game
             </Button>
         </Styled.Container>
